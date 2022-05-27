@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:magang/modules/features/sign_in/view/components/email_form.dart';
+import 'package:magang/modules/features/sign_in/view/components/logo.dart';
+
+import '../../../../models/auth_model.dart';
 
 class LoginView extends StatelessWidget{
-  const LoginView({Key? key}) : super(key: key);
-
+   LoginView({Key? key}) : super(key: key);
+ //  final ILogin _loginService = LoginService();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +28,7 @@ class LoginView extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                    child: Image.asset('assets/images/logo_login.png')
-                ),
+               Logo(),
                 SizedBox(height: 50,),
                 Container(
                   child: Text(' Masukan untuk melanjutkan!',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
@@ -37,6 +41,7 @@ class LoginView extends StatelessWidget{
                           Container(
                             width: 350,
                             child: TextFormField(
+                                controller:_emailController ,
                               //onSaved: (input)=>requestmodel.email=input!,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (input)=>!input!.contains("@")?"email tidak valid":null,
@@ -54,6 +59,7 @@ class LoginView extends StatelessWidget{
                           Container(
                             width: 350,
                             child: TextFormField(
+                              controller: _passwordController,
                               //onSaved: (input)=>requestmodel.password=input!,
                               keyboardType: TextInputType.emailAddress,
                               validator: (input)=>!input!.contains("@")?"email tidak valid":null,
@@ -79,6 +85,7 @@ class LoginView extends StatelessWidget{
                                 ),
                               ],
                             ),
+
                             child: SizedBox(
                               width: 336,
                               height: 44,
@@ -92,14 +99,12 @@ class LoginView extends StatelessWidget{
                                     backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 0, 154, 173),
                                     )
                                 ),
-                                onPressed: (){
-                                  // if(validateAndSave()){
-                                  //   print(requestmodel.toJson());
-                                  // }
-                                },
+                                onPressed: () async {}
+
+                                  ),
                               ),
                             ),
-                          ),
+
                           SizedBox(height: 20,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -151,7 +156,9 @@ class LoginView extends StatelessWidget{
                                         255, 255, 255, 255),
                                     )
                                 ),
-                                onPressed: null,
+                                onPressed: ()async{
+                                //Auth user =await _
+                                },
                               ),
                             ),
                           ),
