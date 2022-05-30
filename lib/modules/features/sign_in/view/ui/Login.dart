@@ -12,7 +12,7 @@ class LoginView extends StatelessWidget{
   var loginController = Get.put(LoginControllers());
    LoginView({Key? key}) : super(key: key);
  //  final ILogin _loginService = LoginService();
-  var internetstatus= GlobalConection();
+  var internetstatus= NewworkController();
 
   @override
   Widget build(BuildContext context) {

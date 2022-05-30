@@ -5,10 +5,10 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../constant/common/conectivityStatus.dart';
 
 
-class GlobalConection extends GetxController {
+class NewworkController extends GetxController {
   StreamController<ConnectivityStatus> connectionStatusController = StreamController<ConnectivityStatus>();
 
-  GlobalConection(){
+  void listenConectivity(){
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       // Use Connectivity() here to gather more info if you need t
 
@@ -29,8 +29,9 @@ class GlobalConection extends GetxController {
     }
   }
   @override
-  voidonInit(){
-
+  void onInit(){
+  super.onInit();
+  listenConectivity();
   }
 
   void onCloser(){
