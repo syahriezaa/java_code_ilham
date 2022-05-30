@@ -13,7 +13,7 @@ class Auth{
       password: parsedJson['password']
     );
   }
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson(Auth data) => {
     "email": email,
     "password":password,
   };

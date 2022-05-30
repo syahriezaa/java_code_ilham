@@ -7,16 +7,12 @@ import '../repository/login_repo.dart';
 
 
 class LoginControllers extends GetxController{
-  TextEditingController loginEditingController = TextEditingController();
-  // final AuthenticationService _authenticationService;
-  // final _authenticationStateStream = AuthenticationState().obs;
-static LoginControllers intances =Get.find();
-late Rx<User?> firebaseUser;
-
-void onReady(){
-  super.onReady();
-  firebaseUser = Rx<User?>(auth.currentUser);
+  TextEditingController emailEditingController = TextEditingController();
+  TextEditingController passwordEditingController = TextEditingController();
+  void login(){
+    Auth user=Auth(email: (emailEditingController.text), password: passwordEditingController.text);
+    //LoginRepo.response(Auth.toJson(LoginRepo()));
+  }
 
 
-}
 }

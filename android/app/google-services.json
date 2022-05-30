@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "486563489162",
+    "project_id": "javacode-1663c",
+    "storage_bucket": "javacode-1663c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486563489162:android:35149ad994bd1de934d473",
+        "android_client_info": {
+          "package_name": "com.example.magang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486563489162-rd9uh5vn2sbcdm6ltmp5g1t7hvb8s3s7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.magang",
+            "certificate_hash": "b58f7f1fc6a8d8a1b421552d5bb6bd6d496a9e28"
+          }
+        },
+        {
+          "client_id": "486563489162-8th77jslodjmbqge0cbrt1snla2f5530.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMShYZbZ2y40Y3YRvRm0tzGA5owQ7wYTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486563489162-8th77jslodjmbqge0cbrt1snla2f5530.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

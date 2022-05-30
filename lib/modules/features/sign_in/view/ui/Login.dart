@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:magang/modules/features/sign_in/controlers/login_controllers.dart';
 import 'package:magang/modules/features/sign_in/view/components/email_form.dart';
 import 'package:magang/modules/features/sign_in/view/components/logo.dart';
 
 import '../../../../models/auth_model.dart';
 
 class LoginView extends StatelessWidget{
+  var loginController = Get.put(LoginControllers());
    LoginView({Key? key}) : super(key: key);
  //  final ILogin _loginService = LoginService();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +42,7 @@ class LoginView extends StatelessWidget{
                           Container(
                             width: 350,
                             child: TextFormField(
-                                controller:_emailController ,
+                                controller:loginController.emailEditingController ,
                               //onSaved: (input)=>requestmodel.email=input!,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (input)=>!input!.contains("@")?"email tidak valid":null,
@@ -59,7 +60,7 @@ class LoginView extends StatelessWidget{
                           Container(
                             width: 350,
                             child: TextFormField(
-                              controller: _passwordController,
+                              controller: loginController.passwordEditingController,
                               //onSaved: (input)=>requestmodel.password=input!,
                               keyboardType: TextInputType.emailAddress,
                               validator: (input)=>!input!.contains("@")?"email tidak valid":null,
@@ -99,7 +100,7 @@ class LoginView extends StatelessWidget{
                                     backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 0, 154, 173),
                                     )
                                 ),
-                                onPressed: () async {}
+                                onPressed: loginController.login
 
                                   ),
                               ),
