@@ -3,16 +3,20 @@ import 'package:get/get.dart';
 import 'package:magang/modules/features/sign_in/controlers/login_controllers.dart';
 import 'package:magang/modules/features/sign_in/view/components/email_form.dart';
 import 'package:magang/modules/features/sign_in/view/components/logo.dart';
+import 'package:magang/modules/global_controllers/global_conection.dart';
 
+import '../../../../../constant/common/conectivityStatus.dart';
 import '../../../../models/auth_model.dart';
 
 class LoginView extends StatelessWidget{
   var loginController = Get.put(LoginControllers());
    LoginView({Key? key}) : super(key: key);
  //  final ILogin _loginService = LoginService();
+  var internetstatus= GlobalConection();
 
   @override
   Widget build(BuildContext context) {
+    print(internetstatus.connectionStatusController);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(

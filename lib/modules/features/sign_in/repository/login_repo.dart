@@ -15,18 +15,6 @@ class LoginRepo{
     }
     }
 
-  static void response(data) {
-    Future <User>login(String email, String password)async {
-      var response = await ApiServices.dioCall().post(ApiConstant.url+'/auth/login',data:{email:'email',password:'password'});
-      if (response.statusCode==200){
-        final userdata=response.data;
-        return response.data;
-      }
-      else{
-        return Future.error("unkown Error");
-      }
-    }
-  }
 
   }
 
