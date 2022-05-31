@@ -9,7 +9,7 @@ class ApiServices {
 
 
   // Create Dio
-  static Dio dioCall({int connectTimeout = 20000}) {
+  static Dio dioCall({int connectTimeout = 20000, String? token}) {
     String? token;
 
     var header = {
@@ -20,7 +20,7 @@ class ApiServices {
     var dio = Dio(
       BaseOptions(
         headers: header,
-        baseUrl: ApiConstant.url,
+        baseUrl: ApiConstant.baseUrl,
         connectTimeout: connectTimeout,
       ),
     );

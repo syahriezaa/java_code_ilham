@@ -1,13 +1,13 @@
 import 'dart:core';
-import 'package:java_code_app/utils/extensions/currency_extension.dart';
-import 'package:java_code_app/utils/extensions/string_case_extension.dart';
+import 'package:magang/utils/extensions/currency_extension.dart';
+import 'package:magang/utils/extensions/string_case_extension.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:get/get.dart';
 
 class PromoResponse{
   final int? status_code;
   final String? message;
-  final List<PromoData>? data;
+  final PromoData? data;
   PromoResponse({
     required this.status_code,
     this.message,
@@ -25,7 +25,7 @@ class PromoResponse{
       status_code: json['status_code'],
       message: json['message'],
       data: json['status_code'] == 200
-          ? json['data'].map<PromoData>((e) => PromoData.fromJson(e)).toList()
+          ? json['data'].map<PromoData>((e) => PromoData.fromJSON(e)).toList()
           : null,
     );
   }
@@ -35,7 +35,7 @@ class PromoResponse{
 class PromoData{
   int? id_promo;
   String? nama;
-  String? type;
+  String type;
   int? diskon;
   int? nominal;
   String? kadauarsa;
@@ -57,7 +57,7 @@ class PromoData{
       required  this.created_by,
       required this.is_deleted});
 
-  factory PromoData.fromJson(Map<String, dynamic> json) {
+  factory PromoData.fromJSON(Map<String, dynamic> json) {
     return PromoData(
       id_promo: int.parse(json["id_promo"]),
       nama: json["nama"],
@@ -88,9 +88,33 @@ class PromoData{
       "is_deleted": this.is_deleted,
     };
   }
-  String get typeLabel => type?.tr.toTitleCase();
+  String get typeLabel => type.tr.toTitleCase();
+
   String get amountLabel => type == 'diskon' ? '$diskon%' : nominal!.toShortK();
 
   String get typeAmountLabel => '$typeLabel $amountLabel';
 }
+
+class ListPromo{
+  final int status_code;
+  final String? message;
+  final List<PromoData>? data;
+
+  ListPromo({
+    required this.status_code,
+    this.message,
+    this.data
+});
+  factory ListPromo.fromJSON(Map<String,dynamic>parsedJson){
+    return ListPromo(
+      status_code:parsedJson["status_code"],
+      message:parsedJson["message"],
+      data: parsedJson['status_code']==200
+        ?parsedJson['data'].map<PromoData>((e)=>PromoData.fromJSON(e)).toJson()
+          :null,
+    );
+  }
+}
+
+
 

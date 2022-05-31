@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 class Auth{
@@ -93,14 +95,26 @@ class UserData{
 
 class UserRes{
   int? status_code;
-  UserData?  data;
+  String? message;
+  User?  data;
+  String? token;
 
-  UserRes({required this.status_code, required this.data});
+  UserRes({
+  required this.status_code,
+  this.data,
+  this.message,
+  this.token
+  }
+  );
 
   factory UserRes.fromJSON(Map<String, dynamic> parsedJson) {
     return UserRes(
         status_code:parsedJson["status_code"],
-        data: parsedJson["data"],
+        message: parsedJson["meesage"],
+        data : parsedJson['status_code']==200
+            ?User.fromJSON(parsedJson['data']['user'])
+            :null,
+        token: parsedJson['status_code'] == 200 ? parsedJson['token']['data']['token'] : null,
     );
   }
   Map<String, dynamic> toJson(Auth data) => {
@@ -176,6 +190,8 @@ class GoogleAuth{
       is_google   : json["is_google"].toLowerCase() == 'true',
     );
   }
+
+
 
   Map<String, dynamic> toJson() {
     return {

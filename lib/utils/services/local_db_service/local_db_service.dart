@@ -17,10 +17,24 @@ class LocalDbService{
     if(user==null)return null;
     return User.fromJSON(json.decode(user));
   }
-
+  ///Clear user data
   static Future<void>clearUser(User user)async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user');
   }
 
+  static Future<void> setToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
+  }
+
+  static Future<String?> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  static Future<void> clearToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+  }
 }
