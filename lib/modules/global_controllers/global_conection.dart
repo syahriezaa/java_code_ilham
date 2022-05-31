@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../constant/common/conectivityStatus.dart';
+import 'package:get/get.dart';
 
 
 class NewworkController extends GetxController {

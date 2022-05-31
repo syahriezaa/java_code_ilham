@@ -1,5 +1,18 @@
+import 'dart:core';
+import 'package:java_code_app/utils/extensions/currency_extension.dart';
+import 'package:java_code_app/utils/extensions/string_case_extension.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:get/get.dart';
+
 class PromoResponse{
-  int? status_code;
+  final int? status_code;
+  final String? message;
+  final List<PromoData>? data;
+  PromoResponse({
+    required this.status_code,
+    this.message,
+    this.data
+  });
 
   Map<String, dynamic> toJson() {
     return {
@@ -9,13 +22,15 @@ class PromoResponse{
 
   factory PromoResponse.fromJson(Map<String, dynamic> json) {
     return PromoResponse(
-      status_code: int.parse(json["statusCode"]),
+      status_code: json['status_code'],
+      message: json['message'],
+      data: json['status_code'] == 200
+          ? json['data'].map<PromoData>((e) => PromoData.fromJson(e)).toList()
+          : null,
     );
   }
 
-  PromoResponse({
-    required this.status_code
-  });
+
 }
 class PromoData{
   int? id_promo;
@@ -58,7 +73,7 @@ class PromoData{
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       "id_promo": this.id_promo,
       "nama": this.nama,
@@ -73,4 +88,9 @@ class PromoData{
       "is_deleted": this.is_deleted,
     };
   }
+  String get typeLabel => type?.tr.toTitleCase();
+  String get amountLabel => type == 'diskon' ? '$diskon%' : nominal!.toShortK();
+
+  String get typeAmountLabel => '$typeLabel $amountLabel';
 }
+

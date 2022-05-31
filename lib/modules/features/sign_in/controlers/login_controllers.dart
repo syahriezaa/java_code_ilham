@@ -8,9 +8,12 @@ import '../repository/login_repo.dart';
 
 
 class LoginControllers extends GetxController{
+
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
+
   LoginRepo _loginRepo=LoginRepo();
+
   Future <void> login()async{
     Auth user=Auth(email: (emailEditingController.text), password: passwordEditingController.text);
     UserRes result= await _loginRepo.login(user.email, user.password);
