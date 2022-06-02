@@ -13,7 +13,8 @@ class LoginView extends StatelessWidget{
    LoginView({Key? key}) : super(key: key);
  //  final ILogin _loginService = LoginService();
   var internetstatus= NewworkController();
-
+  var password = LoginControllers().passwordEditingController;
+  var email = LoginControllers().emailEditingController;
   @override
   Widget build(BuildContext context) {
     print(internetstatus.connectionStatusController);
@@ -46,7 +47,7 @@ class LoginView extends StatelessWidget{
                           Container(
                             width: 350,
                             child: TextFormField(
-                                controller:loginController.emailEditingController ,
+                                controller:email ,
                               //onSaved: (input)=>requestmodel.email=input!,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (input)=>!input!.contains("@")?"email tidak valid":null,
@@ -64,9 +65,10 @@ class LoginView extends StatelessWidget{
                           Container(
                             width: 350,
                             child: TextFormField(
-                              controller: loginController.passwordEditingController,
+
+                              controller: password,
                               //onSaved: (input)=>requestmodel.password=input!,
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.visiblePassword,
                               validator: (input)=>!input!.contains("@")?"email tidak valid":null,
                               decoration: InputDecoration(
                                 hintText: '*************************',
@@ -104,7 +106,7 @@ class LoginView extends StatelessWidget{
                                     backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 0, 154, 173),
                                     )
                                 ),
-                                onPressed: loginController.login
+                                onPressed:(){LoginControllers.to.login(email.text, password.text);}
 
                                   ),
                               ),

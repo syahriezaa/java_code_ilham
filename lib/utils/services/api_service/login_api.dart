@@ -5,21 +5,20 @@ import 'package:magang/constant/core/apis_const/api_constant.dart';
 class ApiServices {
   ApiServices._internal();
 
-  static final _singleton = ApiServices._internal();
-
-
   // Create Dio
   static Dio dioCall({int connectTimeout = 20000, String? token}) {
-    String? token;
 
-    var header = {
+    var headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
+      'Accept': 'application/json',
     };
 
+    if (token != null) {
+      headers['token'] = token;
+    }
     var dio = Dio(
       BaseOptions(
-        headers: header,
+        headers: headers,
         baseUrl: ApiConstant.baseUrl,
         connectTimeout: connectTimeout,
       ),

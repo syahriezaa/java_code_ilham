@@ -73,7 +73,7 @@ class PromoData{
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       "id_promo": this.id_promo,
       "nama": this.nama,

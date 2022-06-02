@@ -13,15 +13,17 @@ class LoginControllers extends GetxController{
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
 
-  LoginRepo _loginRepo=LoginRepo();
 
-  Future <void> login()async{
-    Auth user=Auth(email: (emailEditingController.text), password: passwordEditingController.text);
-    UserRes result= await _loginRepo.login(user.email, user.password);
+   void login(String email, String password)async{
+     print(email);
+     print(password);
+    UserRes result= await LoginRepo.login(email, password);
+
+
     if(result.status_code==200){
       await LocalDbService.setUser(result.data!);
       await LocalDbService.setToken(result.token!);
-      Get.offAllNamed('/conection_check');
+      Get.offAllNamed('/home_view');
     }
     else{
         print(result.status_code);

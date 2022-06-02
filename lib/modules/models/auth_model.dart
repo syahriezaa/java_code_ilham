@@ -22,16 +22,15 @@ class Auth{
 }
 
 class User{
-  int idUser;
-  String email;
-  String nama;
-  String pin;
-  String foto;
-  int mRolesId;
-  int isGoogle;
-  int isCostumer;
-  String roles;
-  List <String> akses;
+  int? idUser;
+  String? email;
+  String? nama;
+  String? pin;
+  String? foto;
+  int? mRolesId;
+  int? isGoogle;
+  int? isCostumer;
+  String? roles;
 
 User({
   required this.idUser,
@@ -43,7 +42,7 @@ User({
   required this.isGoogle,
   required this.isCostumer,
   required this.roles,
-  required this.akses});
+});
 
   factory User.fromJSON(Map<String, dynamic>parsedJson){
     return User(
@@ -56,7 +55,7 @@ User({
       isGoogle    :parsedJson['is_google'],
       isCostumer  :parsedJson ['is_costumer'],
       roles       :parsedJson['roles'],
-      akses       :parsedJson['akses']
+
     );
   }
   Map<String,dynamic>toJson()=>{
@@ -69,7 +68,6 @@ User({
     'is_google'     : isGoogle,
     'is_costumer'   : isCostumer,
     'roles'         : roles,
-    'akses'         : akses,
   };
 }
 
@@ -114,7 +112,7 @@ class UserRes{
         data : parsedJson['status_code']==200
             ?User.fromJSON(parsedJson['data']['user'])
             :null,
-        token: parsedJson['status_code'] == 200 ? parsedJson['token']['data']['token'] : null,
+        token: parsedJson['status_code'] == 200 ? parsedJson['data']['token'] : null,
     );
   }
   Map<String, dynamic> toJson(Auth data) => {

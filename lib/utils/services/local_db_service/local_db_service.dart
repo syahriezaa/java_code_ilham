@@ -11,14 +11,14 @@ class LocalDbService{
     await prefs.setString('user',json.encode(user.toJson()));
   }
   ///Get User data
-  static Future<User?> GetUser(User user)async{
+  static Future<User?> GetUser()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? user = prefs.getString('user');
     if(user==null)return null;
     return User.fromJSON(json.decode(user));
   }
   ///Clear user data
-  static Future<void>clearUser(User user)async{
+  static Future<void>clearUser()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user');
   }

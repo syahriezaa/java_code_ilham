@@ -10,11 +10,11 @@ import '../../../../utils/services/api_service/login_api.dart';
 class PromoRepo{
   PromoRepo._();
   ///Mendapatkan semua promo
-  Future  <ListPromo> getAll() async {
+ static Future  <ListPromo> getAll() async {
     try {
       var dio =ApiServices.dioCall(token: await LocalDbService.getToken());
       var response = await dio.get(ApiConstant.allPromo);
-
+      print(response.data);
       return ListPromo.fromJSON(response.data);
     }
     on DioError {
