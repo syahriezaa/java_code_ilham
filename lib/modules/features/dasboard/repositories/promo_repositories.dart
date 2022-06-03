@@ -22,7 +22,7 @@ class PromoRepo{
     }
   }
   ///Mendapatkan promo berdasarkan ID
-  Future<PromoResponse> getFromId(int idPromo)async{
+  static Future<PromoResponse> getFromId(int idPromo)async{
     try{
       var dio =ApiServices.dioCall(token: await LocalDbService.getToken());
       var response = await dio.get('${ApiConstant.Promo}/$idPromo');
