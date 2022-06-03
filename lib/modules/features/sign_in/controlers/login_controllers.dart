@@ -23,7 +23,7 @@ class LoginControllers extends GetxController{
     if(result.status_code==200){
       await LocalDbService.setUser(result.data!);
       await LocalDbService.setToken(result.token!);
-      Get.offAllNamed('/home_view');
+      Get.offAllNamed('/dashboard_view');
     }
     else{
         print(result.status_code);

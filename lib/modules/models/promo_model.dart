@@ -33,8 +33,8 @@ class PromoResponse{
 
 }
 class PromoData{
-  int? id_promo;
-  String? nama;
+  int id_promo;
+  String nama;
   String type;
   int? diskon;
   int? nominal;
@@ -48,7 +48,7 @@ class PromoData{
       required this.id_promo,
       required this.nama,
       required this.type,
-      required this.diskon,
+      this.diskon,
       required this.nominal,
       required this.kadauarsa,
       required this.syarat_ketentuan,
@@ -59,17 +59,17 @@ class PromoData{
 
   factory PromoData.fromJSON(Map<String, dynamic> json) {
     return PromoData(
-      id_promo: int.parse(json["id_promo"]),
+      id_promo:json["id_promo"]as int,
       nama: json["nama"],
       type: json["type"],
-      diskon: int.parse(json["diskon"]),
-      nominal: int.parse(json["nominal"]),
+      diskon: json["diskon"]as int?,
+      nominal: json["nominal"]as int?,
       kadauarsa: json["kadauarsa"],
       syarat_ketentuan: json["syarat_ketentuan"],
-      foto: json["foto"],
-      created_at: int.parse(json["created_at"]),
-      created_by: int.parse(json["created_by"]),
-      is_deleted: int.parse(json["is_deleted"]),
+      foto: json["foto"] as String?,
+      created_at: json["created_at"] as int,
+      created_by: json["created_by"] as int,
+      is_deleted: json["is_deleted"] as int,
     );
   }
 
@@ -110,7 +110,7 @@ class ListPromo{
       status_code:parsedJson["status_code"],
       message:parsedJson["message"],
       data: parsedJson['status_code']==200
-        ?parsedJson['data'].map<PromoData>((e)=>PromoData.fromJSON(e)).toJson()
+        ?parsedJson['data'].map<PromoData>((e)=>PromoData.fromJSON(e)).toList()
           :null,
     );
   }

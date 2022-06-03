@@ -1,31 +1,33 @@
 
-class MenuData{
-  int id_menu;
-  String nama;
-  String? kategori;
-  int? harga;
-  String? Deskripsi;
-  String? foto;
-  int? Status;
+import 'package:magang/constant/core/assets_conts/asset_cons.dart';
 
-  MenuData(
-      {required this.id_menu,
-      required this.nama,
-      this.kategori,
-      this.harga,
-      this.Deskripsi,
-      this.foto,
-      this.Status});
+class MenuData{
+  final int id_menu;
+  final String nama;
+  final String  kategori;
+  final int harga;
+  final String  deskripsi;
+  final String foto;
+  final int status;
+
+  MenuData({
+    required this.id_menu,
+    required this.nama,
+    required this.kategori,
+    required this.harga,
+    required this.deskripsi,
+    required this.foto,
+    required this.status});
 
   factory MenuData.fromJson(Map<String, dynamic> json) {
     return MenuData(
-      id_menu: int.parse(json["id_menu"]),
-      nama: json["nama"],
-      kategori: json["kategori"],
-      harga: int.parse(json["harga"]),
-      Deskripsi: json["Deskripsi"],
-      foto: json["foto"],
-      Status: int.parse(json["Status"]),
+      id_menu: json["id_menu"]as int,
+      nama: json["nama"] as String,
+      kategori: json["kategori"] as String,
+      harga: json["harga"]as int ,
+      deskripsi: json["deskripsi"] as String,
+      foto: (json['foto'] ??AssetCons.defaultFoodImage) as String,
+      status: json["status"]as int,
     );
   }
 
@@ -35,27 +37,27 @@ class MenuData{
       "nama": this.nama,
       "kategori": this.kategori,
       "harga": this.harga,
-      "Deskripsi": this.Deskripsi,
+      "deskripsi": this.deskripsi,
       "foto": this.foto,
-      "Status": this.Status,
+      "status": this.status,
     };
   }
 }
 
 class LisMenutResponse{
   final int status_code;
-  final String? meesage;
+  final String? message;
   final List<MenuData>? data;
 
   LisMenutResponse({
     required this.status_code,
-    this.meesage,
+    this.message,
     this.data});
 
   factory LisMenutResponse.fromJson(Map<String, dynamic> json) {
     return LisMenutResponse(
-      status_code: int.parse(json["status_code"]),
-      meesage: json["meesage"],
+      status_code: json["status_code"]as int,
+      message: json["message"],
       data: json['status_code']==200
           ?json['data'].map<MenuData>((e)=>MenuData.fromJson(e)).toList()
         :null

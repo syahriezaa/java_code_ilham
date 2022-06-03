@@ -7,7 +7,11 @@ class ApiConstant{
   static const String login ='$baseUrl/auth/login';
 
   ///home
+  ///Promo
   static const String allPromo ='$baseUrl/promo/all';
   static const String Promo ='$baseUrl/promo/detail';
+  ///Menu
+  static const String allMenu ='$baseUrl/menu/all';
+  static const String menu ='$baseUrl/menu/detail';
 
 }

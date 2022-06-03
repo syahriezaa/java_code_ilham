@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../config/themes/colors.dart';
-import '../controller/dasboard_controller.dart';
+import 'package:magang/modules/features/dasboard/view/ui/home_view.dart';
+import '../../../../../config/themes/colors.dart';
+import '../../controller/dasboard_controller.dart';
 
 class DashboardView extends StatelessWidget {
 
@@ -17,7 +18,7 @@ class DashboardView extends StatelessWidget {
           ()=>IndexedStack(
             index : DashboardController.to.tabIndex.value,
               children : const[
-                //HomeView(),
+                HomeView(),
               ]
           )
       ),

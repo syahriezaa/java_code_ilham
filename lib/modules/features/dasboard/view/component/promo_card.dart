@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magang/config/themes/colors.dart';
 import 'package:magang/modules/models/promo_model.dart';
+import 'package:magang/utils/extensions/string_case_extension.dart';
 
 class PromoCard extends StatelessWidget {
   final PromoData promo;
@@ -55,11 +56,31 @@ class PromoCard extends StatelessWidget {
               child:Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children :[
-                  Text(promo.typeLabel,
-                  style :Theme.of(context)
-                  .textTheme.headline6!.copyWith(color:Colors.white),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(promo.typeLabel,
+                      style :Theme.of(context).textTheme.headline6!.copyWith(color:Colors.white),
+                      ),
+                      SizedBox(width:5.w),
+                      Text(promo.amountLabel,
+                        style :Theme.of(context).
+                        textTheme.
+                        headline4!.copyWith(
+                          foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 1.5
+                            ..color = Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width:5.w),
+                  Text(
+                    promo.nama.toTitleCase(),
+                    style :Theme.of(context).
+                    textTheme.caption!.copyWith(color:Colors.white.withOpacity(0.75)),
+                    textAlign: TextAlign.center,
+                  ),
                 ]
               )
 

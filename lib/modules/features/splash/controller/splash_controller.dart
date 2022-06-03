@@ -20,9 +20,9 @@ class SplashController extends GetxController{
     // }
     if (user!=null &&token != null){
       if (uri is Uri){
-        Get.offAllNamed('/home_view');
+        Get.offAllNamed('/dashboard_view');
       }else{
-        Get.offAllNamed('/home_view');
+        Get.offAllNamed('/dashboard_view');
       }
     }else{
       Get.offAllNamed('/login');
