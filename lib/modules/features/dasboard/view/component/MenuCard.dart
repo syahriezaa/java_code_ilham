@@ -29,6 +29,7 @@ class MenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: onTap,
       borderRadius: BorderRadius.circular(10.w),
       child: Ink(
         padding: EdgeInsets.all(7.w),
@@ -55,11 +56,17 @@ class MenuCard extends StatelessWidget {
                 borderRadius:BorderRadius.circular(10.w),
                 color:greyColor2,
               ),
-              child:Image.network(
-                menu.foto,
-                fit:BoxFit.contain,
-                height: 75,
-                width: 75,)
+              child:Hero(
+                tag: 'menu-photo-${menu.id_menu}',
+                child:Image.network(
+                  menu.foto,
+                  fit:BoxFit.contain,
+                  height: 75,
+                  width: 75,
+                ),
+              ),
+
+
             ),
             SizedBox(width: 12),
             Expanded(

@@ -64,6 +64,69 @@ class LisMenutResponse{
     );
   }
 //
+}
 
+class MenuVariant {
+  final int id_detail;
+  final String keterangan;
+  final String type;
+  final int harga;
+
+  MenuVariant({
+    required this.id_detail,
+    required this.keterangan,
+    required this.type,
+    required this.harga,
+  });
+
+  factory MenuVariant.fromJson(Map<String, dynamic> json) {
+    return MenuVariant(
+      id_detail: json["id_detail"]as int,
+      keterangan: json["keterangan"] as String,
+      type: json["type"] as String,
+      harga: json["harga"]as int,
+    );
+    }
+    Map<String,dynamic>toMap(){
+    return{
+      'id_detail':id_detail,
+      'keterangan':keterangan,
+      'type':type,
+      'harga':harga,
+    };
+    }
+
+}
+
+class MenuRes{
+  final int status_code;
+  final String? message;
+  final MenuData? data;
+  final List<MenuVariant> topping;
+  final List<MenuVariant> level;
+
+  MenuRes({
+    required this.status_code,
+    this.message,
+    this.data,
+    this.topping =const <MenuVariant>[],
+    this.level = const <MenuVariant>[],
+  });
+
+  factory MenuRes.fromJson(Map<String, dynamic> json) {
+    return MenuRes(
+      status_code: json["status_code"]as int,
+      message: json["message"],
+      data: json['status_code']==200
+          ?MenuData.fromJson(json['data'])
+        :null,
+      topping: json['status_code']==200
+          ?json['topping'].map<MenuVariant>((e)=>MenuVariant.fromJson(e)).toList()
+        :null,
+      level: json['status_code']==200
+          ?json['level'].map<MenuVariant>((e)=>MenuVariant.fromJson(e)).toList()
+        :null,
+    );
+  }
 }
 

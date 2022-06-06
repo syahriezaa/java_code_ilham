@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:get/get.dart';
 import 'package:magang/modules/features/dasboard/repositories/promo_repositories.dart';
 import 'package:path_provider/path_provider.dart';
@@ -14,13 +13,17 @@ class PromoByIdController extends GetxController{
   RxString status=RxString('loading');
   Rxn<PromoData> promo=Rxn<PromoData>();
 
+  @override
   void onInit(){
     super.onInit();
-
-    if (Get.arguments is PromoData){
+    print(Get.arguments);
+    print(PromoData);
+    if (Get.arguments is PromoData) {
+      print('if');
       status.value = 'success';
       promo.value = Get.arguments as PromoData;
-    }else if(Get.arguments is int){
+    } else if (Get.arguments is int) {
+      print('else');
       setUsingId(Get.arguments as int);
     }
   }
@@ -28,11 +31,11 @@ class PromoByIdController extends GetxController{
   
   Future<void> setUsingId(int id) async{
     final promoRes = await PromoRepo.getFromId(id);
-
+    print("set using id is runing");
     if(promoRes.status_code==200){
       promo.value=promoRes.data;
       status.value='success';
-  } else if(Get.arguments is int){
+  } else {
     status.value='error';
   }
   }

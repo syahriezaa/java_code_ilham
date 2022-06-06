@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:magang/modules/features/dasboard/view/component/MenuCard.dart';
 
+import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/themes/colors.dart';
 import '../../../../../constant/core/assets_conts/asset_cons.dart';
 import '../../../../../shared/widgets/shimmer.dart';
@@ -24,7 +25,10 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh:()async{
-          await Future.any([DashboardController.to.getPromo()]);
+          await Future.any([
+            DashboardController.to.getPromo(),
+              DashboardController.to.getListMenu(),
+          ]);
         } ,
       child: CustomScrollView(
         slivers: [
@@ -117,7 +121,9 @@ class HomeView extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => PromoCard(
                 promo: DashboardController.to.listPromo.elementAt(index),
-                onTap: () {}
+                onTap: ()=>Get.toNamed(
+                    AppRoutes.PromoDetailView,
+                    arguments:DashboardController.to.listPromo..elementAt(index)),
               ),
               itemCount: DashboardController.to.listPromo.length,
               separatorBuilder: (context, index) => SizedBox(width: 25.w),
@@ -236,7 +242,12 @@ class HomeView extends StatelessWidget {
                       (menu) => MenuCard(
                         menu: menu,
                         simple: true,
-                        onTap: () {},
+                        onTap: () {
+                          print("click ");
+                          Get.toNamed(
+                              AppRoutes.MenuDetailView,
+                              arguments: menu);
+                          },
                   ),
                 ).toList(),
               );
@@ -304,7 +315,9 @@ class HomeView extends StatelessWidget {
                         (menu) => MenuCard(
                       menu: menu,
                       simple: true,
-                      onTap: () {},
+                      onTap: () {     Get.toNamed(
+                          AppRoutes.MenuDetailView,
+                          arguments: menu);},
                     ),
                   ).toList(),
                 );

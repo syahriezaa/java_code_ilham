@@ -71,6 +71,7 @@ class DashboardController extends GetxController{
   RxList<MenuData> listMenu = RxList<MenuData>();
 
 
+
   /// mendapatkan data menu
   Future<void> getListMenu() async {
     statusMenu.value = 'loading';
