@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       designSize: appDsignSize,
       builder:(context, _)=> GetMaterialApp(
       title:"Java Code",
-      //initialBinding: GlobalBinding() ,
+      initialBinding: GlobalBinding() ,
       initialRoute: AppRoutes.SplashView,
       getPages: AppPages.pages(),
     ),

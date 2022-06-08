@@ -115,17 +115,21 @@ class MenuRes{
 
   factory MenuRes.fromJson(Map<String, dynamic> json) {
     return MenuRes(
-      status_code: json["status_code"]as int,
-      message: json["message"],
-      data: json['status_code']==200
-          ?MenuData.fromJson(json['data'])
-        :null,
-      topping: json['status_code']==200
-          ?json['topping'].map<MenuVariant>((e)=>MenuVariant.fromJson(e)).toList()
-        :null,
-      level: json['status_code']==200
-          ?json['level'].map<MenuVariant>((e)=>MenuVariant.fromJson(e)).toList()
-        :null,
+      status_code: json['status_code'] as int,
+      message: json['message'] as String?,
+      data: json['status_code'] == 200
+          ? MenuData.fromJson(json['data']['menu'])
+          : null,
+      topping: json['status_code'] == 200 && json['data']['topping'] is List
+          ? json['data']['topping']
+          .map<MenuVariant>((e) => MenuVariant.fromJson(e))
+          .toList()
+          : const <MenuVariant>[],
+      level: json['status_code'] == 200 && json['data']['level'] is List
+          ? json['data']['level']
+          .map<MenuVariant>((e) => MenuVariant.fromJson(e))
+          .toList()
+          : const <MenuVariant>[],
     );
   }
 }

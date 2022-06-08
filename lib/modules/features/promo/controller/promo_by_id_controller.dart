@@ -16,8 +16,11 @@ class PromoByIdController extends GetxController{
   @override
   void onInit(){
     super.onInit();
+    print("arguments");
     print(Get.arguments);
     print(PromoData);
+
+    print(Get.arguments.runtimeType);
     if (Get.arguments is PromoData) {
       print('if');
       status.value = 'success';
@@ -36,8 +39,11 @@ class PromoByIdController extends GetxController{
       promo.value=promoRes.data;
       status.value='success';
   } else {
+      (e,stack){
+      print (stack);
     status.value='error';
-  }
+  };
+    }
   }
 
   ScreenshotController screenshotController = ScreenshotController();

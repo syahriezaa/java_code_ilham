@@ -45,7 +45,7 @@ class HomeView extends StatelessWidget {
               )
             ),
           ),
-          ///promo
+          ///Tampilan list promo
           SliverList(
               delegate: SliverChildListDelegate(promoSection(context)),
           ),
@@ -123,7 +123,7 @@ class HomeView extends StatelessWidget {
                 promo: DashboardController.to.listPromo.elementAt(index),
                 onTap: ()=>Get.toNamed(
                     AppRoutes.PromoDetailView,
-                    arguments:DashboardController.to.listPromo..elementAt(index)),
+                    arguments:DashboardController.to.listPromo.elementAt(index)),
               ),
               itemCount: DashboardController.to.listPromo.length,
               separatorBuilder: (context, index) => SizedBox(width: 25.w),
@@ -148,7 +148,7 @@ class HomeView extends StatelessWidget {
                   ()=>FilterMenu(
                     isSelected: DashboardController.to.categoryMenu.value == 'all',
                     onTap:()=>DashboardController.to.categoryMenu('all'),
-                    iconPath: AssetCons.ListIcon,
+                    iconPath: AssetCons.listIcon,
                     text:'all menu'.tr,
                   ),
               ),
@@ -160,7 +160,7 @@ class HomeView extends StatelessWidget {
                   ()=>FilterMenu(
                     isSelected: DashboardController.to.categoryMenu.value == 'food',
                     onTap:()=>DashboardController.to.categoryMenu.value = 'food',
-                    iconPath: AssetCons.FoodIcon,
+                    iconPath: AssetCons.foodIcon,
                     text:'food menu'.tr,
                   ),
               ),
@@ -172,7 +172,7 @@ class HomeView extends StatelessWidget {
                   ()=>FilterMenu(
                     isSelected: DashboardController.to.categoryMenu.value == 'drink',
                     onTap:()=>DashboardController.to.categoryMenu.value = 'drink',
-                    iconPath: AssetCons.DrinksIcon,
+                    iconPath: AssetCons.drinksIcon,
                     text:'drink menu'.tr,
                   ),
               ),
@@ -190,7 +190,7 @@ class HomeView extends StatelessWidget {
         children:[
           SizedBox(width:25.w),
           SvgPicture.asset(
-              AssetCons.FoodIcon,
+              AssetCons.foodIcon,
               width: 23.w,
               color:blueColor
           ),
@@ -263,7 +263,7 @@ class HomeView extends StatelessWidget {
           children:[
             SizedBox(width:25.w),
             SvgPicture.asset(
-                AssetCons.DrinksIcon,
+                AssetCons.drinksIcon,
                 width: 23.w,
                 color:blueColor
             ),

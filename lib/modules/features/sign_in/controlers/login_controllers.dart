@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:magang/modules/features/sign_in/repository/login_repo.dart';
 import '../../../../utils/services/local_db_service/local_db_service.dart';
 import '../../../models/auth_model.dart';
@@ -25,11 +26,51 @@ class LoginControllers extends GetxController{
       await LocalDbService.setToken(result.token!);
       Get.offAllNamed('/dashboard_view');
     }
-    else{
-        print(result.status_code);
+    else if (result.status_code == 422 || result.status_code == 204){
+      Get.showSnackbar(GetSnackBar(
+        title: 'Something went wrong'.tr,
+        message: 'account_incorrect'.tr,
+        duration: const Duration(seconds: 2),
+      ));
+    }
+    else {
+      Get.showSnackbar(GetSnackBar(
+        title: 'Something went wrong'.tr,
+        message: result.message ?? 'Unknown error'.tr,
+        duration: const Duration(seconds: 2),
+      ));
+    }
+   }
+  void loginWithGoogle() async {
+    /// Singleton GoogleSignIn
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    /// Sign out dari akun saat ini (apabila ada) dan sign in
+    await googleSignIn.signOut();
+
+    GoogleSignInAccount? account = await googleSignIn.signIn();
+
+    if (account == null) throw Exception('error');
+
+    /// Memanggil API repository
+    UserRes userRes = await LoginRepo.getUserFromGoogle(
+        account.displayName ?? '-', account.email);
+
+    if (userRes.status_code == 200) {
+      /// Mengatur token dan user
+      await LocalDbService.setUser(userRes.data!);
+      await LocalDbService.setToken(userRes.token!);
+
+      /// Pergi ke halaman dashboard
+      Get.offNamed('/dashboard_view');
+    } else {
+      Get.showSnackbar(GetSnackBar(
+        title: 'Something went wrong'.tr,
+        message: 'Unknown error'.tr,
+        duration: const Duration(seconds: 2),
+      ));
     }
   }
-
 
 
 }

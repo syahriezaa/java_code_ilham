@@ -3,6 +3,7 @@ import 'package:magang/utils/extensions/currency_extension.dart';
 import 'package:magang/utils/extensions/string_case_extension.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:get/get.dart';
+import 'package:equatable/equatable.dart';
 
 class PromoResponse{
   final int? status_code;
@@ -32,7 +33,7 @@ class PromoResponse{
 
 
 }
-class PromoData{
+class PromoData extends Equatable{
   int id_promo;
   String nama;
   String type;
@@ -93,6 +94,10 @@ class PromoData{
   String get amountLabel => type == 'diskon' ? '$diskon%' : nominal!.toShortK();
 
   String get typeAmountLabel => '$typeLabel $amountLabel';
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id_promo];
 }
 
 class ListPromo{

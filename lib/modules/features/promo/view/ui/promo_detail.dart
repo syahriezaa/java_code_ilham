@@ -34,7 +34,7 @@ class PromoDetailView extends StatelessWidget {
         title: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            SvgPicture.asset(AssetCons.PromoIcon,width:32.w),
+            SvgPicture.asset(AssetCons.promoIcon,width:32.w),
             SizedBox(width:10.w),
             Text("Promo".tr,
               style:

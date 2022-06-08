@@ -164,7 +164,7 @@ class LoginView extends StatelessWidget{
                                     )
                                 ),
                                 onPressed: ()async{
-                                //Auth user =await _
+                                LoginControllers.to.loginWithGoogle();
                                 },
                               ),
                             ),
