@@ -26,7 +26,6 @@ class _MyAppState extends State<MyApp> {
   //final NewworkController globalConection= Get.find<NewworkController>();
   @override
   Widget build(BuildContext context) {
-    Get.put(SplashController());
     return ScreenUtilInit(
       designSize: appDsignSize,
       builder:(context, _)=> GetMaterialApp(

@@ -2,28 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:magang/constant/core/assets_conts/asset_cons.dart';
 import 'package:magang/utils/extensions/currency_extension.dart';
 
 import '../../../../../config/themes/colors.dart';
+import '../../../../../shared/widgets/counter.dart';
 import '../../../../models/menu_model.dart';
 
 class MenuCard extends StatelessWidget {
   
   final MenuData menu;
+  final int? price;
   final bool simple;
+  final int quantity;
+  final String note;
   final void Function()? onTap;
   final void Function()? onIncrement;
   final void Function()? onDecrement;
+  final void Function(String)? onNoteChanged;
   
   ///constructor
 
   const MenuCard({
     Key? key,
-    required this.menu,
+   required this.menu,
+    this.price,
     this.simple = false,
+    this.quantity=0,
+    this.note=' ',
     this.onTap,
     this.onIncrement,
     this.onDecrement,
+    this.onNoteChanged,
   }) : super(key: key);
   
   @override
@@ -83,14 +93,40 @@ class MenuCard extends StatelessWidget {
               ),
                       SizedBox(height: 4.h),
                       Text(
-                        menu.harga.toRupiah(),
+                         (price ?? menu.harga).toRupiah(),
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             color: blueColor, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 4.h),
-                  ]
+                      if(!simple)
+                        Row(
+                            children: [
+                            SvgPicture.asset(AssetCons.noteIcon, height: 12.h),
+                            SizedBox(width: 7.w),
+                            SizedBox(
+                              width: 150.w,
+                              child: TextFormField(
+                                initialValue: note,
+                                style: Theme.of(context).textTheme.labelMedium,
+                                decoration: InputDecoration.collapsed(
+                                  hintText: 'Add note'.tr,
+                                  border: InputBorder.none,
+                                ),
+                                onChanged: onNoteChanged,
+                              ),
+                            ),
+                            ],
               ),
-            )
+    ]
+              ),
+    ),
+    SizedBox(width: 12.w),
+    if(!simple)
+        QuantityCounter(
+          quantity: quantity,
+          onIncrement: onIncrement,
+          onDecrement: onDecrement,
+        ),
           ],
         ),
       ),

@@ -64,8 +64,10 @@ class QuantityCounter extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             child:InkWell(
               onTap: onIncrement,
-              child: const Icon(
-                  Icons.add,size:16,color: blueColor
+              child: Ink(
+                padding: const EdgeInsets.all(2),
+                color: blueColor,
+                child: const Icon(Icons.add, size: 16, color: Colors.white),
               ),
             )
         ),

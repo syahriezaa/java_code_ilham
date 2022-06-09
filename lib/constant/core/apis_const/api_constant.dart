@@ -1,6 +1,6 @@
 class ApiConstant{
   ///baseUrl
-  static const String baseUrl ="https://trainee.landa.id/javacode/";
+  static const String baseUrl ="https://trainee.landa.id/javacode";
   static const apiKey='';
 
   ///Authorization
@@ -14,4 +14,6 @@ class ApiConstant{
   static const String allMenu ='$baseUrl/menu/all';
   static const String menu ='$baseUrl/menu/detail';
 
+  ///voucher
+  static const String allVoucher ='$baseUrl/voucher/all';
 }

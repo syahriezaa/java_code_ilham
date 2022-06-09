@@ -45,7 +45,9 @@ class DetailOrder extends Equatable {
 
   /// Price per item with level or topping
   int get price {
-    return menu.harga + totalLevelPrice + totalToppingsPrice;
+    int prices=menu.harga + totalLevelPrice + totalToppingsPrice;
+    print("price : "+prices.toString());
+    return prices;
   }
 
   /// Total price = price * quantity

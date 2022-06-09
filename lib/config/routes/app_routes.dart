@@ -7,4 +7,7 @@ class AppRoutes{
   static const String HomeView = '/home_view';
   static const String PromoDetailView='/promo_detail';
   static const String MenuDetailView = '/menu_view';
+  static const String PesananView = '/pesanan_view';
+  static const String ChooseVoucherView = '/pilih_voucher_view';
+  static const String VucherDetail = '/voucher_detail';
 }

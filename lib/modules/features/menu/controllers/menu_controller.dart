@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang/config/routes/app_routes.dart';
-import 'package:magang/modules/features/cart/contrrollers/cart_controller.dart';
+import 'package:magang/modules/features/pesanan/contrrollers/cart_controller.dart';
 import 'package:magang/modules/features/menu/repositories/menu_repo.dart';
 import 'package:magang/modules/features/menu/view/components/LevelBottomSheet.dart';
 import 'package:magang/modules/features/menu/view/components/note_bottom_sheet.dart';
@@ -45,7 +45,7 @@ class MenuController extends GetxController {
       }
     });
     final cartOrderDetail =
-    CartController.to.cart.firstWhereOrNull((e) => e.menu == menu.value);
+    PesananController.to.cart.firstWhereOrNull((e) => e.menu == menu.value);
 
     if (cartOrderDetail != null) {
       isInCart.value = true;
@@ -137,13 +137,22 @@ class MenuController extends GetxController {
   void addToCart() {
     if (status.value == 'success' &&
         (selectedLevel.value != null || level.isEmpty)) {
-      CartController.to.add(orderDetail);
+      PesananController.to.add(orderDetail);
+      Get.offNamedUntil(
+        AppRoutes.PesananView,
+        ModalRoute.withName(AppRoutes.DashboardView),
+      );
       ;
     }
+    print(orderDetail.price);
   }
   ///hapus Keranjang
   void deleteFromCart() {
-    CartController.to.remove(orderDetail);
+    PesananController.to.remove(orderDetail);
+    Get.offNamedUntil(
+      AppRoutes.PesananView,
+      ModalRoute.withName(AppRoutes.DashboardView),
+    );
   }
 
 }
