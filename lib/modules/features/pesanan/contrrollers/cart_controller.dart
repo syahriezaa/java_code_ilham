@@ -2,15 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:get/get.dart';
 import 'package:magang/config/routes/app_routes.dart';
 import 'package:magang/modules/features/pesanan/repositories/diskon_repo.dart';
 import 'package:magang/modules/features/pesanan/repositories/voucher_repo.dart';
 import 'package:magang/modules/features/pesanan/view/components/discount_detail.dart';
+import 'package:magang/modules/features/pesanan/view/components/order_succes.dart';
 import 'package:magang/modules/models/detail_order.dart';
 import 'package:magang/modules/models/voucher_model.dart';
 
 import '../../../models/discount_model.dart';
+import '../view/components/finggerprint.dart';
 
 class PesananController extends GetxController {
   static PesananController get to => Get.find();
@@ -32,7 +35,8 @@ class PesananController extends GetxController {
 
 
   RxList<DetailOrder> cart = RxList<DetailOrder>();
-/// Getter
+
+  /// Getter
   ///Get Diskon
   Future <void> getDiscounts() async {
     var diskonResponse = await DiskonRepo.getAll();
@@ -40,14 +44,16 @@ class PesananController extends GetxController {
     if (diskonResponse.status_code == 200) {
       diskonResponse.data!.shuffle();
       // TODO: Update this code
-      discounts.value = diskonResponse.data!.sublist(0, 2); diskonResponse.data!.shuffle();
+      discounts.value = diskonResponse.data!.sublist(0, 2);
+      diskonResponse.data!.shuffle();
     }
   }
+
   ///food items
   List<DetailOrder> get foodItems => cart.where((e) => e.isFood).toList();
 
   ///drink items
-  List<DetailOrder> get drinkItems => cart.where((e) =>e.isDrink).toList();
+  List<DetailOrder> get drinkItems => cart.where((e) => e.isDrink).toList();
 
   ///total price
   int get totalPrice => cart.fold(0, (total, item) => total + item.totalPrice);
@@ -60,7 +66,6 @@ class PesananController extends GetxController {
     if (listVoucherList.status_code == 200) {
       voucherStatus.value = 'success';
       vouchers.value = listVoucherList.data!;
-      print('vouchers: ${vouchers.value}');
     } else {
       voucherStatus.value = 'error';
     }
@@ -74,6 +79,7 @@ class PesananController extends GetxController {
       return 0;
     }
   }
+
   ///total discount
   int get totalDiscount =>
       discounts.fold(0, (total, discount) => total + discount.nominal);
@@ -104,11 +110,13 @@ class PesananController extends GetxController {
   void remove(DetailOrder orderDetail) {
     cart.remove(orderDetail);
   }
- /// Penambahan jumlah
+
+  /// Penambahan jumlah
   void increment(DetailOrder orderDetail) {
     orderDetail.quantity++;
     cart.refresh();
   }
+
   ///Pengurangan jumlah
   void decrement(DetailOrder orderDetail) {
     if (orderDetail.quantity > 1) {
@@ -123,17 +131,47 @@ class PesananController extends GetxController {
   void updateNote(DetailOrder orderDetail, String note) {
     orderDetail.note = note;
   }
+
   /// Set voucher
   void setVoucher(VoucherData? voucher) {
     selectedVoucher.value = voucher;
   }
 
+  /// Order
+  void order() async {
+    final LocalAuthentication auth = LocalAuthentication();
 
+    final bool isBiometricSupported = await auth.isDeviceSupported();
+    final bool canCheck = await auth.canCheckBiometrics;
+
+    if (isBiometricSupported && canCheck) {
+      try {
+        final staus = await openFingerprintDialog();
+        if (staus == 'finggerprint') {
+          final bool didAuth = await auth.authenticate(
+              localizedReason: 'Please authenticate to confirm order'.tr,
+              options: const AuthenticationOptions(
+                biometricOnly: true,
+              )
+          );
+          if (didAuth) {
+            openOrderSuccessDialog();
+          }
+        }else if(staus == 'pin'){
+
+        }
+      } on PlatformException{
+
+      }
+    }else{
+
+    }
+  }
 
 
   ///page routing
-
-///open dialog for discount
+  ///
+  ///open dialog for discount
   void openDiscountDialog() {
     Get.defaultDialog(
       title: '',
@@ -141,11 +179,35 @@ class PesananController extends GetxController {
       content: DiskonDetailView(discounts: discounts),
     );
   }
-///open dialog for voucher
+
+  ///open dialog for voucher
   void openVoucherDialog() {
     if (vouchers.isEmpty) getVouchers();
     Get.toNamed(AppRoutes.ChooseVoucherView);
   }
 
+  /// open Finggerprint dialog
+  Future<String?> openFingerprintDialog() async {
+    Get.until(ModalRoute.withName(AppRoutes.PesananView));
+    final arguments = await Get.defaultDialog(
+      title: '',
+      titleStyle: const TextStyle(fontSize: 0),
+      content: const Finggerprint(),
+    );
+
+    return arguments;
+  }
+
+  void openOrderSuccessDialog() {
+    Get.until(ModalRoute.withName(AppRoutes.PesananView));
+    Get.defaultDialog(
+      title: '',
+      titleStyle: const TextStyle(fontSize: 0),
+      content: const OrderSucces(),
+    );
+  }
+  Future <void> pinDialog()async{
+
+  }
 
 }

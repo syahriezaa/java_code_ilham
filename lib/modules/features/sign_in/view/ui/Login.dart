@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:magang/config/themes/colors.dart';
 import 'package:magang/modules/features/sign_in/controlers/login_controllers.dart';
-import 'package:magang/modules/features/sign_in/view/components/email_form.dart';
-import 'package:magang/modules/features/sign_in/view/components/logo.dart';
 import 'package:magang/modules/global_controllers/global_conection.dart';
 
 import '../../../../../constant/common/conectivityStatus.dart';
@@ -34,7 +33,9 @@ class LoginView extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-               Logo(),
+    Container(
+    child: Image.asset('assets/images/logo_login.png')
+    ),
                 SizedBox(height: 50,),
                 Container(
                   child: Text(' Masukan untuk melanjutkan!',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
@@ -51,12 +52,19 @@ class LoginView extends StatelessWidget{
                               //onSaved: (input)=>requestmodel.email=input!,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (input)=>!input!.contains("@")?"email tidak valid":null,
-                                decoration: InputDecoration(
-                                hintText: 'Lorem.ipsum@gmial.com',
-                                labelText:'Alamat Email',
-                                hintStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), //hint text style
-                                labelStyle: TextStyle(fontSize: 13,), //label style
-                                floatingLabelBehavior: FloatingLabelBehavior.never,
+                                decoration: InputDecoration( labelText: 'Email'.tr,
+                                  labelStyle: Theme.of(context).textTheme.bodySmall,
+                                  hintText: 'Lorem.ipsum@gmail.com',
+                                  hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: darkColor.withOpacity(0.25),
+                                  ),
+                                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                                  enabledBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(color: blueColor, width: 2),
+                                  ),
+                                  focusedBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(color: blueColor, width: 2),
+                                  ),
                               ),
 
                             ),
@@ -71,11 +79,19 @@ class LoginView extends StatelessWidget{
                               keyboardType: TextInputType.visiblePassword,
                               validator: (input)=>!input!.contains("@")?"email tidak valid":null,
                               decoration: InputDecoration(
-                                hintText: '*************************',
-                                labelText:'Alamat Email',
-                                hintStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), //hint text style
-                                labelStyle: TextStyle(fontSize: 13,), //label style
-                                floatingLabelBehavior: FloatingLabelBehavior.never,
+                                labelText: 'Password'.tr,
+                                labelStyle: Theme.of(context).textTheme.bodySmall,
+                                hintText: '****************',
+                                hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: darkColor.withOpacity(0.25),
+                                ),
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                enabledBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(color: blueColor, width: 2),
+                                ),
+                                focusedBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(color: blueColor, width: 2),
+                                ),
                               ),
 
                             ),

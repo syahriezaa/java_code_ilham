@@ -25,4 +25,6 @@ class AssetCons{
   static const String discountIcon = "assets/svg/ic_discount.svg";
   static const String paymentIcon = "assets/svg/ic_payment.svg";
   static const String dateIcon = "assets/svg/ic_date.svg";
+  static const String finggerIcon = "assets/svg/ic_finger.svg";
+  static const String successIcon = "assets/svg/ic_pesananskses.svg";
 }
