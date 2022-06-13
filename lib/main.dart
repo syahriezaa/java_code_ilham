@@ -9,6 +9,7 @@ import 'package:magang/modules/global_controllers/global_binding.dart';
 
 
 import 'config/pages/app_pages.dart';
+import 'constant/core/apis_const/api_constant.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: appDsignSize,
+      designSize: AppConstant.appDesignSize,
       builder:(context, _)=> GetMaterialApp(
       title:"Java Code",
       initialBinding: GlobalBinding() ,

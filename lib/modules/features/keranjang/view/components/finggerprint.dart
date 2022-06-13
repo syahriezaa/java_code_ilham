@@ -33,7 +33,7 @@ class Finggerprint extends StatelessWidget {
       SizedBox(height: 30.h),
       GestureDetector(
         child: SvgPicture.asset(AssetCons.finggerIcon),
-        onTap: ()=>Get.back<String>(result: 'finnggerprint'),
+        onTap: ()=>Get.back<String>(result: 'finggerprint'),
       ),
         SizedBox(height: 30.h),
         Row(
@@ -48,20 +48,19 @@ class Finggerprint extends StatelessWidget {
             ),
             SizedBox(width: 15.w),
             Expanded(child: Divider(color: Colors.black.withOpacity(0.25))),
-            TextButton(
-              onPressed: () => Get.back<String>(result: 'pin'),
-              child: Text(
-                'Verify using PIN code'.tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(color: blueColor),
-              )
-              ),
+
           ],
-
         ),
-
+        TextButton(
+            onPressed: () => Get.back<String>(result: 'pin'),
+            child: Text(
+              'Verify using PIN code'.tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall!
+                  .copyWith(color: blueColor),
+            )
+        ),
       ],
     ),
     );

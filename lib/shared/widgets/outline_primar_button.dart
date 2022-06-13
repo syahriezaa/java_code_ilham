@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:magang/config/themes/colors.dart';
 
+import '../../config/themes/colors.dart';
 
-class PrimaryButton extends StatelessWidget {
+class OutlinedPrimaryButton extends StatelessWidget {
   final String text;
   final void Function()? onPressed;
   final VisualDensity? visualDensity;
   final bool isCompact;
 
-  const PrimaryButton({
+  const OutlinedPrimaryButton({
     Key? key,
     required this.text,
     this.onPressed,
     this.visualDensity,
-  }) : isCompact = false,
+  })  : isCompact = false,
         super(key: key);
 
-  const PrimaryButton.compact({
+  const OutlinedPrimaryButton.compact({
     Key? key,
     required this.text,
     this.onPressed,
@@ -31,21 +31,26 @@ class PrimaryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: blueColor,
+        visualDensity: visualDensity,
+        primary: Colors.white,
         elevation: 3,
         textStyle: GoogleFonts.montserrat(
-          fontSize: 14.sp,
+          fontSize: isCompact ? 10.sp : 14.sp,
           fontWeight: FontWeight.w800,
-          color: Colors.white,
           height: 1.219,
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
+        tapTargetSize: isCompact ? MaterialTapTargetSize.shrinkWrap : null,
+        minimumSize: isCompact ? Size(100.r, 40.r) : null,
+        padding: EdgeInsets.symmetric(
+          horizontal: isCompact ? 18.r : 24.r,
+          vertical: isCompact ? 0.r : 14.r,
+        ),
         shape: RoundedRectangleBorder(
-          side: const BorderSide(color: darkBlueColor, width: 1),
+          side: const BorderSide(color: AppColor.darkBlueColor, width: 1),
           borderRadius: BorderRadius.circular(24),
         ),
       ),
-      child: Text(text),
+      child: Text(text, style: const TextStyle(color: AppColor.blueColor)),
     );
   }
 }

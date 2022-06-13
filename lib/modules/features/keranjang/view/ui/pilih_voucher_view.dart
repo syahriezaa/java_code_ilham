@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:magang/config/routes/app_routes.dart';
 import 'package:magang/config/themes/colors.dart';
 import 'package:magang/constant/core/assets_conts/asset_cons.dart';
-import 'package:magang/modules/features/pesanan/view/components/voucher_card.dart';
+import 'package:magang/modules/features/keranjang/view/components/voucher_card.dart';
 import 'package:magang/shared/widgets/primary_button.dart';
 import 'package:magang/shared/widgets/shimmer.dart';
 

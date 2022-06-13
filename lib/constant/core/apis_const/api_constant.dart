@@ -16,4 +16,10 @@ class ApiConstant{
 
   ///voucher
   static const String allVoucher ='$baseUrl/voucher/all';
+
+  /// Order
+  static const String addOrder = '$baseUrl/order/add';
+  static const String onGoingOrder = '$baseUrl/order/user';
+  static const String historyOrder = '$baseUrl/order/history';
+  static const String detailOrder = '$baseUrl/order/detail';
 }

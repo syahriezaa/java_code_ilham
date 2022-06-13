@@ -16,7 +16,6 @@ class LoginView extends StatelessWidget{
   var email = LoginControllers().emailEditingController;
   @override
   Widget build(BuildContext context) {
-    print(internetstatus.connectionStatusController);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(

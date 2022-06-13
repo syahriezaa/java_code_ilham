@@ -106,7 +106,7 @@ class MenuView extends StatelessWidget {
                       icon: AssetCons.priceIcon,
                       title: 'harga'.tr,
                       message:
-                      MenuController.to.orderDetail.totalPrice.toRupiah(),
+                      MenuController.to.keranjang.price.toRupiah(),
                       messageStyle: Theme.of(context)
                           .textTheme
                           .headlineSmall!

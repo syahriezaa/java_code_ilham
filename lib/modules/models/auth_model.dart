@@ -22,7 +22,7 @@ class Auth{
 }
 
 class User{
-  int? idUser;
+  int? id_user;
   String? email;
   String? nama;
   String? pin;
@@ -33,7 +33,7 @@ class User{
   String? roles;
 
 User({
-  required this.idUser,
+  required this.id_user,
   required this.email,
   required this.nama,
   required this.pin,
@@ -46,7 +46,7 @@ User({
 
   factory User.fromJSON(Map<String, dynamic>parsedJson){
     return User(
-      idUser      :parsedJson['id_user'],
+      id_user      :parsedJson['id_user'],
       email       :parsedJson['email'],
       nama        :parsedJson['nama'],
       pin         :parsedJson['pin'],
@@ -59,7 +59,7 @@ User({
     );
   }
   Map<String,dynamic>toJson()=>{
-    'id_user'       :idUser,
+    'id_user'       :id_user,
     'email'         :email,
     'nama'          :nama,
     'pin'           :pin,

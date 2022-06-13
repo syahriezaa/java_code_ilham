@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang/config/routes/app_routes.dart';
-import 'package:magang/modules/features/pesanan/contrrollers/cart_controller.dart';
+import 'package:magang/modules/features/keranjang/contrrollers/cart_controller.dart';
 import 'package:magang/modules/features/menu/repositories/menu_repo.dart';
 import 'package:magang/modules/features/menu/view/components/LevelBottomSheet.dart';
 import 'package:magang/modules/features/menu/view/components/note_bottom_sheet.dart';
 import 'package:magang/modules/features/menu/view/components/topping_bottom_sheet.dart';
 import 'package:magang/modules/models/detail_order.dart';
+import 'package:magang/modules/models/keranjang.dart';
 import 'package:magang/modules/models/menu_model.dart';
 import 'package:magang/shared/style/shapes.dart';
+
+import '../../keranjang/contrrollers/cart_controller.dart';
 
 class MenuController extends GetxController {
   static MenuController get to => Get.find();
@@ -45,7 +48,7 @@ class MenuController extends GetxController {
       }
     });
     final cartOrderDetail =
-    PesananController.to.cart.firstWhereOrNull((e) => e.menu == menu.value);
+    PesananController.to.keranjang.firstWhereOrNull((e) => e.menu == menu.value);
 
     if (cartOrderDetail != null) {
       isInCart.value = true;
@@ -79,7 +82,7 @@ class MenuController extends GetxController {
       ? selectedTopping.map((topping) => topping.keterangan).join(', ')
       : 'Choose topping'.tr;
 
-  DetailOrder get orderDetail => DetailOrder(
+  Keranjang get keranjang => Keranjang(
       menu: menu.value!,
       quantity: quantity.value,
       note: note.value,
@@ -137,20 +140,17 @@ class MenuController extends GetxController {
   void addToCart() {
     if (status.value == 'success' &&
         (selectedLevel.value != null || level.isEmpty)) {
-      PesananController.to.add(orderDetail);
+      PesananController.to.add(keranjang);
       Get.offNamedUntil(
-        AppRoutes.PesananView,
+        AppRoutes.keranjangView,
         ModalRoute.withName(AppRoutes.DashboardView),
       );
-      ;
     }
-    print(orderDetail.price);
   }
-  ///hapus Keranjang
   void deleteFromCart() {
-    PesananController.to.remove(orderDetail);
+    PesananController.to.remove(keranjang);
     Get.offNamedUntil(
-      AppRoutes.PesananView,
+      AppRoutes.keranjangView,
       ModalRoute.withName(AppRoutes.DashboardView),
     );
   }

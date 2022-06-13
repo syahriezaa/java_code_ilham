@@ -133,14 +133,14 @@ class VucherDetail extends StatelessWidget {
               text: 'Use voucher'.tr,
               onPressed: () {
                 PesananController.to.setVoucher(voucher);
-                Get.until(ModalRoute.withName(AppRoutes.PesananView));
+                Get.until(ModalRoute.withName(AppRoutes.keranjangView));
               },
             ),
             fallbackBuilder: (context) => DangerButton(
               text: 'Use voucher later'.tr,
               onPressed: () {
                 PesananController.to.setVoucher(null);
-                Get.until(ModalRoute.withName(AppRoutes.PesananView));
+                Get.until(ModalRoute.withName(AppRoutes.keranjangView));
               },
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:magang/modules/features/pesanan/contrrollers/cart_controller.dart';
+import 'package:magang/modules/features/keranjang/contrrollers/cart_controller.dart';
 import 'package:magang/modules/global_controllers/global_conection.dart';
 
 class GlobalBinding extends Bindings{

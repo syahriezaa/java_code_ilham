@@ -4,57 +4,52 @@ import 'package:equatable/equatable.dart';
 import 'package:magang/constant/common/constants.dart';
 import 'package:magang/modules/models/menu_model.dart';
 
-class DetailOrder extends Equatable {
-  MenuData menu;
-  int quantity;
-  String note;
-  MenuVariant? level;
-  List<MenuVariant>? toppings;
+import '../../constant/core/apis_const/api_constant.dart';
 
-  DetailOrder({
-    required this.menu,
-    required this.quantity,
-    required this.note,
-    required this.level,
-    required this.toppings,
+class OrderDetail extends Equatable {
+  final int id_menu;
+  final String kategori;
+  final String topping;
+  final String nama;
+  final String? foto;
+  final int jumlah;
+  final String harga;
+  final int total;
+  final String catatan;
+
+  const OrderDetail({
+    required this.id_menu,
+    required this.kategori,
+    required this.topping,
+    required this.nama,
+    required this.foto,
+    required this.jumlah,
+    required this.harga,
+    required this.total,
+    required this.catatan,
   });
 
-  /// Getter untuk makanan
-  bool get isFood => menu.kategori == foodCategory;
+  /// Apakah menu ini adalah makanan
+  bool get isFood => kategori == AppConstant.foodCategory;
 
-  /// Getter untuk minuman
-  bool get isDrink => menu.kategori == drinkCategory;
+  /// Apakah menu ini adalah minuman
+  bool get isDrink => kategori == AppConstant.drinkCategory;
 
-  /// Total level price
-  int get totalLevelPrice {
-    if (level == null) {
-      return 0;
-    } else {
-      return level!.harga;
-    }
-  }
-
-  /// Total topping price
-  int get totalToppingsPrice {
-    if (toppings == null) {
-      return 0;
-    } else {
-      return toppings!.fold<int>(0, (total, topping) => total + topping.harga);
-    }
-  }
-
-  /// Price per item with level or topping
-  int get price {
-    int prices=menu.harga + totalLevelPrice + totalToppingsPrice;
-    print("price : "+prices.toString());
-    return prices;
-  }
-
-  /// Total price = price * quantity
-  int get totalPrice {
-    return price * quantity;
+  /// From json
+  factory OrderDetail.fromJson(Map<String, dynamic> json) {
+    return OrderDetail(
+      id_menu: json['id_menu'] as int,
+      kategori: json['kategori'] as String,
+      topping: json['topping'] as String,
+      nama: json['nama'] as String,
+      foto: json['foto'] as String?,
+      jumlah: json['jumlah'] as int,
+      harga: json['harga'] as String,
+      total: json['total'] as int,
+      catatan: json['catatan'] as String,
+    );
   }
 
   @override
-  List<Object?> get props => [menu.id_menu];
+  List<Object?> get props => [];
 }

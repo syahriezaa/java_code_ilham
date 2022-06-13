@@ -17,7 +17,7 @@ class AssetCons{
   static const String topingIcon = "assets/svg/ic_toping.svg";
   static const String noteIcon = "assets/svg/ic_catatan.svg";
 
-  ///Pesnanan IconButton
+  ///keranjang Icon
   static const String voucherIcon = "assets/svg/ic_voucher.svg";
   static const String pesanan="assets/svg/ic_pesanan.svg";
   static const String EmptycartIcon = "assets/images/ic_empty.png";
@@ -25,6 +25,10 @@ class AssetCons{
   static const String discountIcon = "assets/svg/ic_discount.svg";
   static const String paymentIcon = "assets/svg/ic_payment.svg";
   static const String dateIcon = "assets/svg/ic_date.svg";
-  static const String finggerIcon = "assets/svg/ic_finger.svg";
-  static const String successIcon = "assets/svg/ic_pesananskses.svg";
+  static const String finggerIcon = "assets/svg/ic_finggerprint.svg";
+  static const String successIcon = "assets/svg/ic_pesanansukses.svg";
+
+  ///Order Icon
+  static const String serverError = "assets/svg/ic_server_error.svg";
+static const String background = "assets/images/bg_location.png";
 }
