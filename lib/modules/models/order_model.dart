@@ -1,4 +1,4 @@
-
+import 'package:equatable/equatable.dart';
 import 'package:magang/modules/models/detail_order.dart';
 
 class Order {

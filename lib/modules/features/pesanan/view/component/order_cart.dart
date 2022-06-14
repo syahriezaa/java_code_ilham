@@ -26,6 +26,7 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //print(order.menu.first.foto);
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(10.r),

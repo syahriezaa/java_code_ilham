@@ -30,5 +30,7 @@ class AssetCons{
 
   ///Order Icon
   static const String serverError = "assets/svg/ic_server_error.svg";
-static const String background = "assets/images/bg_location.png";
+  static const String background = "assets/images/bg_location.png";
+  static const String noDataIcon = "assets/svg/ic_no_data.svg";
+  static const String orderIcon = "assets/svg/ic_order.svg";
 }

@@ -12,11 +12,7 @@ import 'package:magang/modules/features/keranjang/repositories/voucher_repo.dart
 import 'package:magang/modules/features/keranjang/view/components/discount_detail.dart';
 import 'package:magang/modules/features/keranjang/view/components/order_succes.dart';
 import 'package:magang/modules/features/keranjang/view/components/pin_dialogue.dart';
-import 'package:magang/modules/features/pesanan/repositories/order_repo.dart';
 import 'package:magang/modules/models/auth_model.dart';
-import 'package:magang/modules/models/cart_item_model.dart';
-import 'package:magang/modules/models/detail_order.dart';
-import 'package:magang/modules/models/keranjang.dart';
 import 'package:magang/modules/models/keranjang.dart';
 import 'package:magang/modules/models/voucher_model.dart';
 import 'package:magang/shared/widgets/ErrorSnackBar.dart';
@@ -33,6 +29,7 @@ class PesananController extends GetxController {
     super.onInit();
 
     getDiscounts();
+    getVouchers();
   }
 
 
@@ -46,7 +43,6 @@ class PesananController extends GetxController {
 
   RxList<Keranjang> keranjang = RxList<Keranjang>();
 
-  RxList<Keranjang> cart = RxList<Keranjang>();
 
   /// Getter
   ///Get Diskon
@@ -56,7 +52,6 @@ class PesananController extends GetxController {
     if (diskonResponse.status_code == 200) {
       diskonResponse.data!.shuffle();
       discounts.value = diskonResponse.data!.sublist(0, 2);
-      print(discounts.value);
     }
   }
 
@@ -212,6 +207,7 @@ class PesananController extends GetxController {
   }
 /// order now
   void orderNow() async{
+    ///tutup dialog
     Get.until(ModalRoute.withName(AppRoutes.keranjangView));
     Get.defaultDialog(
       title: '',
@@ -221,12 +217,13 @@ class PesananController extends GetxController {
 
     final cartReq = CartRequest(
       user: await LocalDbService.GetUser() as User,
-      cart: cart,
+      cart: keranjang,
       discounts: discounts.isEmpty ? null : discounts.toList(),
       voucher: selectedVoucher.value,
       discountPrice: totalPrice - grandTotalPrice,
       totalPrice: grandTotalPrice,
     );
+    print("cartReq: " + cartReq.cart.toString());
     final response = await OrderRepository.add(cartReq);
 
     if (response != null &&
@@ -235,6 +232,7 @@ class PesananController extends GetxController {
       print("sukses");
       /// Jika sukses, buka dialog sukses
       openOrderSuccessDialog(response.data['data']['id_order']);
+      print("data: "+response.data['data'].toString());
     } else {
       /// Jika gagal, buka dialog error
       Get.until(ModalRoute.withName(AppRoutes.keranjangView));
@@ -260,7 +258,7 @@ class PesananController extends GetxController {
     Get.until(ModalRoute.withName(AppRoutes.DashboardView));
 
     /// Hapus data keranjang
-    cart.clear();
+    keranjang.clear();
     selectedVoucher.value = null;
   }
 

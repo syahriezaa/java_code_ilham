@@ -4,13 +4,10 @@ import 'package:magang/config/themes/colors.dart';
 import 'package:magang/modules/features/sign_in/controlers/login_controllers.dart';
 import 'package:magang/modules/global_controllers/global_conection.dart';
 
-import '../../../../../constant/common/conectivityStatus.dart';
-import '../../../../models/auth_model.dart';
 
 class LoginView extends StatelessWidget{
   var loginController = Get.put(LoginControllers());
    LoginView({Key? key}) : super(key: key);
- //  final ILogin _loginService = LoginService();
   var internetstatus= NewworkController();
   var password = LoginControllers().passwordEditingController;
   var email = LoginControllers().emailEditingController;
@@ -72,9 +69,8 @@ class LoginView extends StatelessWidget{
                           Container(
                             width: 350,
                             child: TextFormField(
-
                               controller: password,
-                              //onSaved: (input)=>requestmodel.password=input!,
+                              obscureText: true,
                               keyboardType: TextInputType.visiblePassword,
                               validator: (input)=>!input!.contains("@")?"email tidak valid":null,
                               decoration: InputDecoration(
