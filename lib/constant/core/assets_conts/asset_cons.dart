@@ -3,6 +3,8 @@ class AssetCons{
   ///login IconButton
 
   static const String googleIcon = "assets/svg/ic_google.svg";
+  ///loaction image
+  static const String locationIcon="assets/images/loading_map.png";
   ///
   static const String homeIcon="assets/svg/ic_home.svg";
   static const String pesananIcon="assets/svg/ic_persanan.svg";

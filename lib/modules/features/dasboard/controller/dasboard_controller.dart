@@ -3,6 +3,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:magang/config/routes/app_routes.dart';
 import 'package:magang/modules/features/dasboard/repositories/promo_repositories.dart';
+import 'package:magang/modules/features/loading_location/view/location_view.dart';
+import 'package:magang/utils/services/location_service.dart';
 
 import '../../../models/menu_model.dart';
 import '../../../models/promo_model.dart';
@@ -13,11 +15,11 @@ class DashboardController extends GetxController{
 
   void onReady(){
     super.onReady();
-    //
-    // Future.delayed(const Duration(milliseconds:500),()async{
-    //   Get.toNamed(AppRoutes.LoadingLocation);
-    //   //await getLocation();
-    // });
+
+    Future.delayed(const Duration(milliseconds:500),()async{
+      Get.dialog(const LoadingLocation(), barrierDismissible: false);
+      await getLocation();
+    });
     getPromo();
     getListMenu();
   }
@@ -112,6 +114,37 @@ class DashboardController extends GetxController{
   /// Cart
   RxMap<int, int> quantities = RxMap<int, int>();
   RxMap<int, String> notes = RxMap<int, String>();
+
+  /// Location variables
+  RxString statusLocation = RxString('loading');
+  RxString messageLocation = RxString('');
+  Rxn<Position> position = Rxn<Position>();
+  RxnString address = RxnString();
+
+  Future<void> getLocation() async {
+    try {
+      /// Mendapatkan lokasi saat ini
+      position.value = await LocationServices.getCurrentPosition();
+
+      if (LocationServices.isDistanceClose(position.value!)) {
+        /// Jika jarak lokasi cukup dekat, dapatkan informasi alamat
+        address.value = await LocationServices.getAddress(position.value!);
+        statusLocation.value = 'success';
+
+        await Future.delayed(const Duration(seconds: 1));
+        Get.until((route) => Get.isDialogOpen == false);
+      } else {
+        /// Jika jarak lokasi tidak cukup dekat, tampilkan pesan
+        statusLocation.value = 'error';
+        messageLocation.value = 'Distance not close'.tr;
+      }
+    } catch (e) {
+      /// Jika terjadi kesalahan server
+      statusLocation.value = 'error';
+      messageLocation.value = 'Server error'.tr;
+    }
+  }
+
 }
 
 
