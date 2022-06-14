@@ -11,7 +11,6 @@ class LoginRepo{
   static Future <UserRes>login(
 
       String email, String password)async {
-    print(email+password);
     try {
       var response = await _dio.post(ApiConstant.login, data: {
         'email': email,

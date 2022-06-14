@@ -7,6 +7,7 @@ import 'package:magang/modules/features/keranjang/view/ui/detail_voucher.dart';
 import 'package:magang/modules/features/keranjang/view/ui/keranjang_view.dart';
 import 'package:magang/modules/features/pesanan/view/ui/detail_order_view.dart';
 import 'package:magang/modules/features/pesanan/view/ui/pesanan_view.dart';
+import 'package:magang/modules/features/profile/view/ui/profil_view.dart';
 
 import '../../modules/features/dasboard/view/ui/Dashboard_view.dart';
 import '../../modules/features/dasboard/view/ui/home_view.dart';
@@ -66,6 +67,9 @@ class AppPages{
       ),
       GetPage(name: AppRoutes.DetailPesananView,
           page: ()=>DetailOrderView()
+      ),
+      GetPage(name: AppRoutes.ProfileView,
+          page: ()=>ProfileView()
       ),
     ];
   }

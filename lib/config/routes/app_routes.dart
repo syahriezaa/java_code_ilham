@@ -12,4 +12,5 @@ class AppRoutes{
   static const String VucherDetail = '/voucher_detail';
   static const String PesananView = '/pesanan_view';
   static const String DetailPesananView = '/detail_order_view';
+  static const String ProfileView = '/profile_view';
 }

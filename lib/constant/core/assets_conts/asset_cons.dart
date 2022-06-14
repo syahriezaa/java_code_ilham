@@ -1,4 +1,9 @@
 class AssetCons{
+
+  ///login IconButton
+
+  static const String googleIcon = "assets/svg/ic_google.svg";
+  ///
   static const String homeIcon="assets/svg/ic_home.svg";
   static const String pesananIcon="assets/svg/ic_persanan.svg";
   static const String profilIcon="assets/svg/ic_profil.svg";
@@ -33,4 +38,7 @@ class AssetCons{
   static const String background = "assets/images/bg_location.png";
   static const String noDataIcon = "assets/svg/ic_no_data.svg";
   static const String orderIcon = "assets/svg/ic_order.svg";
+
+  ///Profile Icon
+  static const String bgProfile = "assets/images/bg_profile.png";
 }

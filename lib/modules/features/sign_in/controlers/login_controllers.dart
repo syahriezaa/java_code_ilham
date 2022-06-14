@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:magang/modules/features/sign_in/repository/login_repo.dart';
+import 'package:magang/shared/widgets/ErrorSnackBar.dart';
 import '../../../../utils/services/local_db_service/local_db_service.dart';
 import '../../../models/auth_model.dart';
 import '../repository/login_repo.dart';
@@ -16,11 +17,9 @@ class LoginControllers extends GetxController{
 
 
    void login(String email, String password)async{
-     print(email);
-     print(password);
     UserRes result= await LoginRepo.login(email, password);
 
-
+    print(result.status_code);
     if(result.status_code==200){
       await LocalDbService.setUser(result.data!);
       await LocalDbService.setToken(result.token!);
@@ -29,11 +28,10 @@ class LoginControllers extends GetxController{
     else if (result.status_code == 422 || result.status_code == 204){
       Get.showSnackbar(GetSnackBar(
         title: 'Something went wrong'.tr,
-        message: 'account_incorrect'.tr,
+        message: 'Incorrect email or password'.tr,
         duration: const Duration(seconds: 2),
       ));
-    }
-    else {
+    } else {
       Get.showSnackbar(GetSnackBar(
         title: 'Something went wrong'.tr,
         message: result.message ?? 'Unknown error'.tr,
@@ -63,11 +61,16 @@ class LoginControllers extends GetxController{
 
       /// Pergi ke halaman dashboard
       Get.offNamed('/dashboard_view');
-    } else {
-      Get.showSnackbar(GetSnackBar(
+    } else if (userRes.status_code == 422 || userRes.status_code == 204) {
+      /// Tampilkan snackbar jika username atau password salah
+      Get.showSnackbar(ErrorSnackBar(
         title: 'Something went wrong'.tr,
-        message: 'Unknown error'.tr,
-        duration: const Duration(seconds: 2),
+        message: 'Email or password is incorrect'.tr,
+      ));
+    } else {
+      Get.showSnackbar(ErrorSnackBar(
+        title: 'Something went wrong'.tr,
+        message: 'Unknown error'.tr ,
       ));
     }
   }

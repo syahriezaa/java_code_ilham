@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magang/modules/features/dasboard/view/ui/home_view.dart';
 import 'package:magang/modules/features/keranjang/view/ui/keranjang_view.dart';
 import 'package:magang/modules/features/pesanan/view/ui/pesanan_view.dart';
+import 'package:magang/modules/features/profile/view/ui/profil_view.dart';
 import '../../../../../config/themes/colors.dart';
 import '../../controller/dasboard_controller.dart';
 
@@ -22,6 +23,7 @@ class DashboardView extends StatelessWidget {
               children : const[
                 HomeView(),
                 PesananView(),
+                ProfileView(),
               ]
           )
       ),

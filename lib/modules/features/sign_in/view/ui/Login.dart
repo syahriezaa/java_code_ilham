@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:magang/config/themes/colors.dart';
+import 'package:magang/constant/core/assets_conts/asset_cons.dart';
 import 'package:magang/modules/features/sign_in/controlers/login_controllers.dart';
 import 'package:magang/modules/global_controllers/global_conection.dart';
 
@@ -162,22 +166,44 @@ class LoginView extends StatelessWidget{
                             child: SizedBox(
                               width: 336,
                               height: 44,
-                              child: ElevatedButton(child: Image.asset('assets/images/login_google.png'),
-
-                                style: ButtonStyle(
-                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18.0)
-                                        )
-                                    ),
-                                    backgroundColor: MaterialStateProperty.all(Color.fromARGB(
-                                        255, 255, 255, 255),
-                                    )
+                              child: ElevatedButton(
+                                onPressed:  ()async{
+                                              LoginControllers.to.loginWithGoogle();
+                                              },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.white,
+                                  elevation: 4,
+                                  padding: EdgeInsets.symmetric(horizontal: 36.r, vertical: 14.r),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24.r),
+                                  ),
                                 ),
-                                onPressed: ()async{
-                                LoginControllers.to.loginWithGoogle();
-                                },
-                              ),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(AssetCons.googleIcon, width: 24.r, height: 24.r),
+                                    const Spacer(),
+                                    Text(
+                                      'Login with'.tr,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColor.darkColor,
+                                        height: 1.219,
+                                      ),
+                                    ),
+                                    Text(
+                                      ' Google',
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColor.darkColor,
+                                        height: 1.219,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                  ],
+                                ),
+                              )
                             ),
                           ),
                           SizedBox(height: 30,),

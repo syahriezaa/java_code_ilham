@@ -25,10 +25,12 @@ class User{
   int? id_user;
   String? email;
   String? nama;
-  String? pin;
+  DateTime? tgl_lahir;
+  String? alamat;
+  String? telepon;
+  String? ktp;
   String? foto;
-  int? mRolesId;
-  int? isGoogle;
+  String? pin;
   int? isCostumer;
   String? roles;
 
@@ -36,12 +38,12 @@ User({
   required this.id_user,
   required this.email,
   required this.nama,
-  required this.pin,
+  required this.tgl_lahir,
+  required this.alamat,
+  required this.telepon,
+  required this.ktp,
   required this.foto,
-  required this.mRolesId,
-  required this.isGoogle,
-  required this.isCostumer,
-  required this.roles,
+  required this.pin,
 });
 
   factory User.fromJSON(Map<String, dynamic>parsedJson){
@@ -49,12 +51,13 @@ User({
       id_user      :parsedJson['id_user'],
       email       :parsedJson['email'],
       nama        :parsedJson['nama'],
-      pin         :parsedJson['pin'],
+      tgl_lahir   :parsedJson['tgl_lahir'],
+      alamat      :parsedJson['alamat'],
+      telepon     :parsedJson['telepon'],
+      ktp         :parsedJson['ktp'],
       foto        :parsedJson['foto'],
-      mRolesId    :parsedJson['m_roles_id'],
-      isGoogle    :parsedJson['is_google'],
-      isCostumer  :parsedJson ['is_costumer'],
-      roles       :parsedJson['roles'],
+      pin         :parsedJson['pin'],
+
 
     );
   }
@@ -62,13 +65,25 @@ User({
     'id_user'       :id_user,
     'email'         :email,
     'nama'          :nama,
-    'pin'           :pin,
+    'tgl_lahir'     :tgl_lahir,
+    'alamat'        :alamat,
+    'telepon'       :telepon,
+    'ktp'           :ktp,
     'foto'          :foto,
-    'm_roles_id'    :mRolesId,
-    'is_google'     : isGoogle,
-    'is_costumer'   : isCostumer,
-    'roles'         : roles,
+    'pin'           :pin,
   };
+
+  static User dummy = User(
+    id_user: 0,
+    email: '',
+    nama: '',
+    tgl_lahir: null,
+    alamat: '',
+    telepon: '',
+    ktp: '',
+    pin: '',
+    foto: '',
+  );
 }
 
 class UserData{
