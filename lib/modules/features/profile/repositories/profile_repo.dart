@@ -15,20 +15,24 @@ class ProfileRepo{
       var user = await LocalDbService.GetUser() as User;
       var response = await dio.get('${ApiConstant.detailUser}/${user.id_user}');
 
-      return UserRes.fromJSON(response.data);
+      return UserRes.fromJsonProfile(response.data);
     } on DioError {
       return UserRes(status_code: 500);
     }
   }
+  ///update data user
   static Future<UserRes> update(Map<String,String>data) async {
     try {
       var dio = ApiServices.dioCall(token: await LocalDbService.getToken());
       var user = await LocalDbService.GetUser() as User;
+      print(data);
       var response = await dio.post(
-          '${ApiConstant.updateUser} /${user.id_user}',
-          data:data,) ;
-      return UserRes.fromJSON(response.data);
-    } on DioError {
+          '${ApiConstant.updateUser}/${user.id_user}', data:data);
+
+      return UserRes.fromJsonProfile(response.data);
+    } on DioError catch(e) {
+      print(e);
+      print(DioError);
       return UserRes(status_code: 500);
     }
   }
@@ -40,8 +44,23 @@ class ProfileRepo{
         '${ApiConstant.updateUserPhoto}/${user.id_user}',
         data: {'image': photo},
       );
+      return UserRes.fromJsonProfile(response.data);
+    } on DioError {
+      return  UserRes(status_code: 500);
+    }
 
-      return UserRes.fromJSON(response.data);
+  }
+  ///update KPT user
+  static Future<UserRes> updateKTP(String photo) async {
+    try {
+      var dio = ApiServices.dioCall(token: await LocalDbService.getToken());
+      var user = await LocalDbService.GetUser() as User;
+      var response = await dio.post(
+        '${ApiConstant.updateUserKTP}/${user.id_user}',
+        data: {'image': photo},
+      );
+
+      return UserRes.fromJsonProfile(response.data);
     } on DioError {
       return  UserRes(status_code: 500);
     }

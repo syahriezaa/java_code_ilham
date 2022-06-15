@@ -15,7 +15,9 @@ class GlobalController extends GetxController{
 
   void onInit(){
     super.onInit();
+    /// cek konektivitas
     checkConnectivity();
+    /// listen dari perubahan konektivitas
     _connentivity.onConnectivityChanged.listen(_updateConnectivity);
 
   }

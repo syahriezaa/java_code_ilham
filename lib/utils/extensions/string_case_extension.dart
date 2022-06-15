@@ -6,4 +6,5 @@ extension StringCaseExtension on String {
       .split(' ')
       .map((str) => str.toCapitalized())
       .join(' ');
+  String toObscure() => '*' * length;
 }

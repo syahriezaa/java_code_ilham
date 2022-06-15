@@ -23,14 +23,14 @@ class Auth{
 
 class User{
   int? id_user;
-  String? email;
-  String? nama;
+  String email;
+  String nama;
   DateTime? tgl_lahir;
   String? alamat;
   String? telepon;
   String? ktp;
   String? foto;
-  String? pin;
+  String pin;
   int? isCostumer;
   String? roles;
 
@@ -51,7 +51,9 @@ User({
       id_user      :parsedJson['id_user'],
       email       :parsedJson['email'],
       nama        :parsedJson['nama'],
-      tgl_lahir   :parsedJson['tgl_lahir'],
+      tgl_lahir   :parsedJson['tgl_lahir'] != null
+          ? DateTime.parse(parsedJson['tgl_lahir'] as String)
+          : null,
       alamat      :parsedJson['alamat'],
       telepon     :parsedJson['telepon'],
       ktp         :parsedJson['ktp'],
@@ -107,7 +109,7 @@ class UserData{
 
 
 class UserRes{
-  int? status_code;
+  int status_code;
   String? message;
   User?  data;
   String? token;
@@ -130,6 +132,15 @@ class UserRes{
         token: parsedJson['status_code'] == 200 ? parsedJson['data']['token'] : null,
     );
   }
+  factory UserRes.fromJsonProfile(Map<String, dynamic> json) {
+    return UserRes(
+      status_code: json['status_code'],
+      message: json['message'],
+      data: json['status_code'] == 200 ? User.fromJSON(json['data']) : null,
+    );
+  }
+
+
   Map<String, dynamic> toJson(Auth data) => {
     "status_code":status_code,
     "data": data,

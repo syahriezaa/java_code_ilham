@@ -38,7 +38,7 @@ class LoginView extends StatelessWidget{
     ),
                 SizedBox(height: 50,),
                 Container(
-                  child: Text(' Masukan untuk melanjutkan!',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+                  child: Text(' Sign In to Continue!',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
                 ),
                 Container(
                     margin: EdgeInsets.all(20),
@@ -111,7 +111,7 @@ class LoginView extends StatelessWidget{
                             child: SizedBox(
                               width: 336,
                               height: 44,
-                              child: ElevatedButton(child: Text('Masuk',style: TextStyle(color: Colors.white,),),
+                              child: ElevatedButton(child: Text('Sign In',style: TextStyle(color: Colors.white,),),
                                 style: ButtonStyle(
                                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
@@ -139,7 +139,7 @@ class LoginView extends StatelessWidget{
                                 ),
                               ),
                               Text(
-                                "Atau",
+                                "Or",
                                 style: TextStyle(color: Colors.blueGrey),
                               ),
                               Expanded(

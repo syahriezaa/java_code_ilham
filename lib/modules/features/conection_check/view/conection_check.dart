@@ -14,7 +14,7 @@ class ConectionCheck extends StatelessWidget {
               child: Image.asset('assets/images/conection_error.jpg'),
             ),
             Container(
-              child: Text('No Connection Available',style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20)),
+              child: Text('No Connection Available'.tr,style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20)),
             )
 
           ],

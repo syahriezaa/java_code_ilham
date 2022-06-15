@@ -305,7 +305,7 @@ class HomeView extends StatelessWidget {
 
               if(foods.isEmpty){
                 return Center(
-                    child: Text('no_data'.tr,textAlign: TextAlign.center,)
+                    child: Text('no data'.tr,textAlign: TextAlign.center,)
                 );
               }else{
                 return Wrap(

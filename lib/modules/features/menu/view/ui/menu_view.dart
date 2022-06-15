@@ -104,7 +104,7 @@ class MenuView extends StatelessWidget {
                   Obx(
                         () => Tile(
                       icon: AssetCons.priceIcon,
-                      title: 'harga'.tr,
+                      title: 'Price'.tr,
                       message:
                       MenuController.to.keranjang.price.toRupiah(),
                       messageStyle: Theme.of(context)
