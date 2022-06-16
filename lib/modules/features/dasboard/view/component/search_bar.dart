@@ -5,9 +5,14 @@ import 'package:get/get.dart';
 import '../../../../../config/themes/colors.dart';
 
 class SearchBar extends StatelessWidget {
+  final TextEditingController controller;
   final Function(String)? onChanged;
 
-  const SearchBar({Key? key, this.onChanged}) : super(key: key);
+  const SearchBar({
+    Key? key,
+    required this.controller,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,7 @@ class SearchBar extends StatelessWidget {
               onChanged: onChanged,
               style: Theme.of(context).textTheme.bodyText1,
               decoration: InputDecoration.collapsed(
-                hintText: 'Pencarian'.tr,
+                hintText: 'Search'.tr,
                 hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                   color: const Color(0xFFAAAAAA),
                 ),

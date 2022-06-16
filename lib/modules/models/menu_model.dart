@@ -1,7 +1,8 @@
 
+import 'package:equatable/equatable.dart';
 import 'package:magang/constant/core/assets_conts/asset_cons.dart';
 
-class MenuData{
+class MenuData extends Equatable{
   final int id_menu;
   final String nama;
   final String  kategori;
@@ -42,6 +43,10 @@ class MenuData{
       "status": this.status,
     };
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id_menu];
 }
 
 class LisMenutResponse{

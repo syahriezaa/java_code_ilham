@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:magang/constant/common/constants.dart';
 import 'package:magang/constant/core/assets_conts/asset_cons.dart';
 import 'package:magang/utils/extensions/currency_extension.dart';
 
@@ -13,7 +16,7 @@ class MenuCard extends StatelessWidget {
   
   final MenuData menu;
   final int? price;
-  final bool simple;
+  final bool isSimple;
   final int quantity;
   final String note;
   final void Function()? onTap;
@@ -27,15 +30,28 @@ class MenuCard extends StatelessWidget {
     Key? key,
    required this.menu,
     this.price,
-    this.simple = false,
     this.quantity=0,
     this.note=' ',
     this.onTap,
     this.onIncrement,
     this.onDecrement,
     this.onNoteChanged,
-  }) : super(key: key);
-  
+  }) : this.isSimple = false,
+        super(key: key);
+
+  const MenuCard.simple({
+    Key? key,
+    required this.menu,
+    this.price,
+    this.quantity = 0,
+    this.note = '',
+    this.onTap,
+    this.onIncrement,
+    this.onDecrement,
+    this.onNoteChanged,
+  })  : isSimple = true,
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -46,21 +62,22 @@ class MenuCard extends StatelessWidget {
         decoration: BoxDecoration(
           color:lightColor,
           borderRadius: BorderRadius.circular(10.w),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: darkColor,
-              offset: const Offset(0,2),
+              offset: Offset(0,2),
               blurRadius: 8,
               spreadRadius: -1,
             ),
           ],
         ),
-        ///Menu Image
+
         child: Row(
           children: [
+            ///Menu Image
             Container(
-              height:75.w,
-              width:75.w,
+              height: isSimple ? 75.r : 90.r,
+              width: isSimple ? 75.r : 90.r,
               padding: EdgeInsets.all(7.w),
               decoration: BoxDecoration(
                 borderRadius:BorderRadius.circular(10.w),
@@ -68,65 +85,92 @@ class MenuCard extends StatelessWidget {
               ),
               child:Hero(
                 tag: 'menu-photo-${menu.id_menu}',
-                child:Image.network(
-                  menu.foto,
-                  fit:BoxFit.contain,
-                  height: 75,
-                  width: 75,
+                child: CachedNetworkImage(
+                  imageUrl: menu.foto,
+                  fit: BoxFit.contain,
+                  errorWidget: (context, _, __) => CachedNetworkImage(
+                    imageUrl: AppConstant.defaultMenuPhoto,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
 
 
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
+            ///info menu
             Expanded(
               child: Column(
-                crossAxisAlignment:CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                  menu.nama,
-                style:Theme.of(context)
-                  .textTheme
-                  .headline6!
-                  .copyWith(fontWeight: FontWeight.w400),
-                overflow: TextOverflow.ellipsis,
-              ),
-                      SizedBox(height: 4.h),
-                      Text(
-                         (price ?? menu.harga).toRupiah(),
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: blueColor, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 4.h),
-                      if(!simple)
-                        Row(
-                            children: [
-                            SvgPicture.asset(AssetCons.noteIcon, height: 12.h),
-                            SizedBox(width: 7.w),
-                            SizedBox(
-                              width: 150.w,
-                              child: TextFormField(
-                                initialValue: note,
-                                style: Theme.of(context).textTheme.labelMedium,
-                                decoration: InputDecoration.collapsed(
-                                  hintText: 'Add note'.tr,
-                                  border: InputBorder.none,
-                                ),
-                                onChanged: onNoteChanged,
-                              ),
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  /// Nama menu
+                  Text(
+                    menu.nama,
+                    style: Get.textTheme.titleMedium,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+
+                  /// Harga menu
+                  Text(
+                    (price ?? menu.harga).toRupiah(),
+                    style: Get.textTheme.bodyMedium!.copyWith(
+                        color: AppColor.blueColor, fontWeight: FontWeight.bold),
+                  ),
+                  5.verticalSpacingRadius,
+
+                  /// Catatan menu
+                  Conditional.single(
+                    context: context,
+                    conditionBuilder: (context) => !isSimple,
+                    widgetBuilder: (context) => Row(
+                      children: [
+
+                        /// Icon edit
+                        SvgPicture.asset(AssetCons.noteIcon, height: 12.r),
+                        7.horizontalSpaceRadius,
+
+                        /// Text field
+                        Expanded(
+                          child: TextFormField(
+                            initialValue: note,
+                            style: Get.textTheme.labelMedium,
+                            decoration: InputDecoration.collapsed(
+                              hintText: 'Add note'.tr,
+                              border: InputBorder.none,
                             ),
-                            ],
+                            onChanged: onNoteChanged,
+                          ),
+                        ),
+                      ],
+                    ),
+                    fallbackBuilder: (context) => const SizedBox(),
+                  ),
+                ],
               ),
-    ]
+            ),
+
+            SizedBox(width: 12.w),
+            Conditional.single(
+                context: context,
+                conditionBuilder: (context) => !isSimple,
+                widgetBuilder: (context) => Container(
+                  height: 75.r,
+                  padding: EdgeInsets.only(left: 12.r, right: 5.r),
+                  child: InkWell(
+                    onTap: () {},
+                    splashFactory: NoSplash.splashFactory,
+                    child: QuantityCounter(
+                      quantity: quantity,
+                      onIncrement: onIncrement,
+                      onDecrement: onDecrement,
               ),
+      ),
     ),
-    SizedBox(width: 12.w),
-    if(!simple)
-        QuantityCounter(
-          quantity: quantity,
-          onIncrement: onIncrement,
-          onDecrement: onDecrement,
-        ),
+        fallbackBuilder: (context) => const SizedBox(),
+    )
           ],
         ),
       ),

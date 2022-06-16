@@ -29,6 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   google_fonts: ^3.0.1
   get: ^4.6.5
   flutter_screenutil: ^5.5.3+2
@@ -51,12 +53,13 @@ dependencies:
   easy_debounce: ^2.0.2+1
   flutter_svg: ^1.1.0
   flutter_html: ^3.0.0-alpha.2
-  badges: ^2.0.2
+  badges: ^2.0.3
   pinput: ^2.2.10
   local_auth: ^2.1.0
   device_info_plus: ^3.2.4
   image_picker: ^0.8.5+3
   image_cropper: ^2.0.3
+  cached_network_image: ^3.2.1
 
 
   # The following adds the Cupertino Icons font to your application.

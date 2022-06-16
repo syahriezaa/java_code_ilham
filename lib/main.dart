@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:magang/config/localization/localization.dart';
 import 'package:magang/config/routes/app_routes.dart';
 import 'package:magang/config/themes/light_theme.dart';
 import 'package:magang/constant/common/constants.dart';
@@ -31,11 +33,20 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
       designSize: AppConstant.appDesignSize,
       builder:(context, _)=> GetMaterialApp(
-      title:"Java Code",
-      initialBinding: GlobalBinding() ,
-      initialRoute: AppRoutes.SplashView,
+        title:"Java Code",
+        initialBinding: GlobalBinding() ,
+        initialRoute: AppRoutes.SplashView,
         theme: AppTheme.lightTheme,
-      getPages: AppPages.pages(),
+        getPages: AppPages.pages(),
+        translations: Localization(),
+        locale:Localization.locale,
+        fallbackLocale: Localization.fallbackLocale,
+        localizationsDelegates: const[
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: Localization.locales,
     ),
     );
 

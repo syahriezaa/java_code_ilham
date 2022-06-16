@@ -212,6 +212,15 @@ class ProfileView extends StatelessWidget {
                      onTap: ProfileController.to.openUpdatePINDialog,
                    ),
                  ),
+                 Divider(height: 5.r),
+                 Obx(
+                       () => Tile(
+                         color: AppColor.lightColor,
+                     title: 'Change language'.tr,
+                     message: ProfileController.to.currentLanguage.value,
+                     onTap: ProfileController.to.openLanguageDialog,
+                   ),
+                 ),
 
                ],
              ),
@@ -231,7 +240,7 @@ class ProfileView extends StatelessWidget {
                  Text('Review'.tr, style: Get.textTheme.titleSmall),
                  const Spacer(),
                  PrimaryButton.compact(
-                   text: 'Review now'.tr,
+                   text: 'Review Now'.tr,
                    onPressed: () {},
                  ),
                ],
@@ -241,7 +250,7 @@ class ProfileView extends StatelessWidget {
            Padding(
              padding: EdgeInsets.only(left: 20.r),
              child: Text(
-               'More info'.tr,
+               'More Info'.tr,
                style: Get.textTheme.titleMedium!
                    .copyWith(color: AppColor.blueColor),
              ),
@@ -276,7 +285,7 @@ class ProfileView extends StatelessWidget {
              child: SizedBox(
                  width: 204,
                  child: PrimaryButton(
-                   text: 'Log out'.tr,
+                   text: 'Log Out'.tr,
                    onPressed: ProfileController.to.logout,)
              ),
            ),

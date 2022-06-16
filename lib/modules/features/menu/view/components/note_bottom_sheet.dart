@@ -21,7 +21,7 @@ class NoteBottomSheet extends StatelessWidget {
           const HolderBottomSheet(),
           SizedBox(height: 13.h),
           Text(
-            'Create note'.tr,
+            'Create Note'.tr,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           SizedBox(height: 13.h),

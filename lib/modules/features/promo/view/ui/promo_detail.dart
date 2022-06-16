@@ -125,7 +125,7 @@ class PromoDetailView extends StatelessWidget {
                       const Icon(Icons.list, color: blueColor),
                       SizedBox(width: 14.w),
                       Text(
-                        'Terms and conditions'.tr,
+                        'Terms and Conditions'.tr,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ],

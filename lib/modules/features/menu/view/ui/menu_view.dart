@@ -182,12 +182,12 @@ class MenuView extends StatelessWidget {
                           0
                           ? PrimaryButton(
                         text: MenuController.to.isInCart.value
-                            ? 'Update to order'.tr
-                            : 'Add to order'.tr,
+                            ? 'Update to Order'.tr
+                            : 'Add to Order'.tr,
                         onPressed: MenuController.to.addToCart,
                       )
                           : DangerButton(
-                        text: 'Delete from order'.tr,
+                        text: 'Delete from Order'.tr,
                         onPressed: MenuController.to.deleteFromCart,
                       ),
                       fallbackBuilder: (context) => const SizedBox(),

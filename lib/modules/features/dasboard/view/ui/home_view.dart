@@ -5,16 +5,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:magang/modules/features/dasboard/view/component/MenuCard.dart';
+import 'package:badges/badges.dart';
 
-import '../../../../../config/routes/app_routes.dart';
-import '../../../../../config/themes/colors.dart';
-import '../../../../../constant/core/assets_conts/asset_cons.dart';
-import '../../../../../shared/widgets/shimmer.dart';
-import '../../controller/dasboard_controller.dart';
-import '../../controller/dasboard_controller.dart';
-import '../component/filter_menu.dart';
-import '../component/promo_card.dart';
-import '../component/search_bar.dart';
+import 'package:magang/config/routes/app_routes.dart';
+import 'package:magang/config/themes/colors.dart';
+import 'package:magang/constant/core/assets_conts/asset_cons.dart';
+import 'package:magang/modules/features/dasboard/view/component/loading_menu.dart';
+import 'package:magang/modules/features/dasboard/view/component/menu_list.dart';
+import 'package:magang/modules/features/keranjang/contrrollers/cart_controller.dart';
+import 'package:magang/shared/style/shapes.dart';
+import 'package:magang/shared/widgets/custom_err_vertical.dart';
+import 'package:magang/shared/widgets/empty_data.dart';
+import 'package:magang/shared/widgets/shimmer.dart';
+import 'package:magang/modules/features/dasboard/controller/dasboard_controller.dart';
+import 'package:magang/modules/features/dasboard/view/component/filter_menu.dart';
+import 'package:magang/modules/features/dasboard/view/component/promo_card.dart';
+import 'package:magang/modules/features/dasboard/view/component/search_bar.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -23,58 +29,87 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(DashboardController());
     return Scaffold(
-      body: RefreshIndicator(
-        onRefresh:()async{
-          await Future.any([
-            DashboardController.to.getPromo(),
-              DashboardController.to.getListMenu(),
-          ]);
-        } ,
-      child: CustomScrollView(
-        slivers: [
-          ///Appbar
-          SliverAppBar(
-            pinned: true,
-            forceElevated: true,
-            backgroundColor:Colors.white,
-            centerTitle: true,
-            title : SearchBar(),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-              bottom:Radius.circular(30.w),
-              )
-            ),
-          ),
-          ///Tampilan list promo
-          SliverList(
-              delegate: SliverChildListDelegate(promoSection(context)),
-          ),
-          SliverToBoxAdapter(
-            child: Obx(
-                  () => Column(
-                children: [
-                  ...Menu(context),
-                  if (DashboardController.to.categoryMenu.value == 'all' ||
-                      DashboardController.to.categoryMenu.value == 'food')
-                    ...FoodList(context),
-                  if (DashboardController.to.categoryMenu.value == 'all')
-                    SizedBox(width: 25.w),
-                  if (DashboardController.to.categoryMenu.value == 'all' ||
-                      DashboardController.to.categoryMenu.value == 'drink')
-                    ...DrinkList(context),
-                ],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 2,
+        title: Row(
+          children: [
+            Expanded(
+              child: SearchBar(
+                controller: DashboardController.to.searchController,
+                onChanged: DashboardController.to.setQueryMenu,
               ),
             ),
-          ),
-        ],
+            IconButton(
+              onPressed: () => Get.toNamed(AppRoutes.keranjangView),
+              splashRadius: 30.r,
+              visualDensity: VisualDensity.compact,
+              icon: Obx(
+                    () => Badge(
+                  showBadge: PesananController.to.keranjang.isNotEmpty,
+                  badgeColor: AppColor.blueColor,
+                  badgeContent: Text(
+                    PesananController.to.keranjang.length.toString(),
+                    style: Get.textTheme.labelMedium!
+                        .copyWith(color: Colors.white),
+                  ),
+                  child: Icon(Icons.shopping_cart, size: 30.r),
+                ),
+              ),
+              color: Colors.black,
+            ),
+          ],
+        ),
+        shape: CustomShape.bottomRoundedShape,
       ),
-      )
+      body: RefreshIndicator(
+        onRefresh: DashboardController.to.reload,
+        child: ListView(
+          children: [
+            /// Promo section
+            ...promoSection(context),
+
+            /// Menu section
+            listCategoryMenu(context),
+            17.verticalSpacingRadius,
+
+            Obx(
+                  () => Conditional.single(
+                context: context,
+                conditionBuilder: (context) =>
+                DashboardController.to.categoryMenu.value != 'drink',
+                widgetBuilder: (context) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: FoodList(context),
+                ),
+                fallbackBuilder: (context) => const SizedBox(),
+              ),
+            ),
+
+            Obx(
+                  () => Conditional.single(
+                context: context,
+                conditionBuilder: (context) =>
+                DashboardController.to.categoryMenu.value != 'food',
+                widgetBuilder: (context) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: DrinkList(context),
+                ),
+                fallbackBuilder: (context) => const SizedBox(),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
+
+  ///
+  ///Bagian Promo
   List<Widget>promoSection(BuildContext context) {
     return[
       SizedBox(height:25.h),
-      
+
       Row(
         children: [
           SizedBox(width: 25.w),
@@ -95,22 +130,29 @@ class HomeView extends StatelessWidget {
             context: context,
             valueBuilder: (context) => DashboardController.to.statusPromo.value,
             caseBuilders: {
-              'loading': (context) => ListView.separated(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 25.w,
-                  vertical: 15.h,
+              'loading': (context) => SizedBox(
+                height: 188.r,
+                child: ListView.separated(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 25.r,
+                    vertical: 15.r,
+                  ),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, _) => RectShimmer(
+                    width: 282.r,
+                    height: 158.r,
+                    radius: 15.r,
+                  ),
+                  itemCount: 5,
+                  separatorBuilder: (context, _) => 25.horizontalSpaceRadius,
                 ),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, _) => RectShimmer(
-                  width: 282.w,
-                  height: 158.h,
-                  radius: 15.w,
-                ),
-                itemCount: 5,
-                separatorBuilder: (context, _) => SizedBox(width: 25.w),
               ),
-              'error': (context) => Center(
-                child: Text(DashboardController.to.messagePromo.value),
+              'empty': (context) => Padding(
+                padding: EdgeInsets.only(bottom: 15.r),
+                child: EmptyDataVertical(width: 100.r),
+              ),
+              'error': (context) => CustomErrorVertical(
+                message: DashboardController.to.messagePromo.value,
               ),
             },
             fallbackBuilder: (context) => ListView.separated(
@@ -134,53 +176,76 @@ class HomeView extends StatelessWidget {
       SizedBox(height:5.h),
     ];
   }
-  List<Widget> Menu (BuildContext){
-    return[
-      ///Filter Menu
-      SizedBox(height:45.h,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: 25.w,vertical:5.h),
-          children:[
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 6.w),
-              child: Obx(
-                  ()=>FilterMenu(
-                    isSelected: DashboardController.to.categoryMenu.value == 'all',
-                    onTap:()=>DashboardController.to.categoryMenu('all'),
-                    iconPath: AssetCons.listIcon,
-                    text:'all menu'.tr,
-                  ),
-              ),
+  ///filter menu
+  Widget listCategoryMenu(BuildContext context) {
+    final List<Map<String, String>> filters = [
+      {'name': 'All Menu'.tr, 'value': 'all', 'icon': AssetCons.listIcon},
+      {'name': 'Food'.tr, 'value': 'food', 'icon': AssetCons.foodIcon},
+      {'name': 'Drink'.tr, 'value': 'drink', 'icon': AssetCons.drinksIcon},
+    ];
+
+    return SizedBox(
+      height: 45.r,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.symmetric(horizontal: 25.r, vertical: 5.r),
+        itemBuilder: (context, index) => Obx(
+              () => FilterMenu(
+            isSelected:
+            DashboardController.to.categoryMenu.value == filters[index]['value'],
+            onTap: () =>
+                DashboardController.to.setCategoryMenu(filters[index]['value']!),
+            iconPath: filters[index]['icon']!,
+            text: filters[index]['name']!,
+          ),
+        ),
+        itemCount: filters.length,
+        separatorBuilder: (context, index) => 13.horizontalSpaceRadius,
+      ),
+    );
+  }
+
+
+  /// bagian makanan
+  List<Widget> Menu (BuildContext context){
+    return [
+      Row(
+        children: [
+          25.horizontalSpaceRadius,
+          SvgPicture.asset(
+            AssetCons.foodIcon,
+            width: 20.r,
+            height: 20.r,
+            color: AppColor.blueColor,
+          ),
+          10.horizontalSpaceRadius,
+          Text(
+            'Food'.tr,
+            style:
+            Get.textTheme.titleMedium!.copyWith(color: AppColor.blueColor),
+          ),
+        ],
+      ),
+
+      /// Food Section - List
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 25.r, vertical: 17.r),
+        child: ConditionalSwitch.single<String>(
+          context: context,
+          valueBuilder: (context) => DashboardController.to.statusMenu.value,
+          caseBuilders: {
+            'loading': (context) => const LoadingMenu(),
+            'empty': (context) => EmptyDataVertical(width: 100.r),
+            'error': (context) => CustomErrorVertical(
+              message: DashboardController.to.messageMenu.value,
             ),
-            SizedBox(height:13.w),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 6.w),
-              child: Obx(
-                  ()=>FilterMenu(
-                    isSelected: DashboardController.to.categoryMenu.value == 'food',
-                    onTap:()=>DashboardController.to.categoryMenu.value = 'food',
-                    iconPath: AssetCons.foodIcon,
-                    text:'food menu'.tr,
-                  ),
-              ),
-            ),
-            SizedBox(height:13.w),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 6.w),
-              child: Obx(
-                  ()=>FilterMenu(
-                    isSelected: DashboardController.to.categoryMenu.value == 'drink',
-                    onTap:()=>DashboardController.to.categoryMenu.value = 'drink',
-                    iconPath: AssetCons.drinksIcon,
-                    text:'drink menu'.tr,
-                  ),
-              ),
-            ),
-          ]
+          },
+          fallbackBuilder: (context) => MenuList(
+            data: DashboardController.to.foodMenu,
+          ),
         ),
       ),
-      SizedBox(height:17.h),
+      17.verticalSpacingRadius,
     ];
   }
   ///List Menkanan
@@ -196,7 +261,7 @@ class HomeView extends StatelessWidget {
           ),
           SizedBox(width:10.w),
           Text(
-            'food'.tr,
+            'Food'.tr,
             style: Theme.of(context)
                 .textTheme
                 .headline6!
@@ -206,57 +271,27 @@ class HomeView extends StatelessWidget {
           ),
         ]
       ),
+      ///list makanan
       Padding(
-        padding:EdgeInsets.symmetric(horizontal:25.w,vertical:17.h),
-        child : ConditionalSwitch.single<String>(
+        padding: EdgeInsets.symmetric(horizontal: 25.r, vertical: 17.r),
+        child: ConditionalSwitch.single<String>(
           context: context,
-          valueBuilder:(context)=>DashboardController.to.statusMenu.value,
+          valueBuilder: (context) => DashboardController.to.statusMenu.value,
           caseBuilders: {
-            'loading':(context)=>Wrap(
-              runSpacing: 17.h,
-              children:List.generate(2,
-                      (i) => RectShimmer(height:89.h,
-                      radius: 10.w,),
-              ),
+            'loading': (context) => const LoadingMenu(),
+            'empty': (context) => EmptyDataVertical(width: 100.r),
+            'error': (context) => CustomErrorVertical(
+              message: DashboardController.to.messageMenu.value,
             ),
-            'error':(context)=>Center(
-              child:Text(
-                DashboardController.to.messageMenu.value,
-                textAlign: TextAlign.center,
-              ),
-            ),
-
           },
-          fallbackBuilder: (BuildContext context) {
-            final foods = DashboardController.to.foodMenu;
-
-            if(foods.isEmpty){
-              return Center(
-                  child: Text('no_data'.tr,textAlign: TextAlign.center,)
-              );
-            }else{
-              return Wrap(
-                runSpacing: 17.h,
-                children: foods
-                    .map<Widget>(
-                      (menu) => MenuCard(
-                        menu: menu,
-                        simple: true,
-                        onTap: () {
-                          print("click ");
-                          Get.toNamed(
-                              AppRoutes.MenuDetailView,
-                              arguments: menu);
-                          },
-                  ),
-                ).toList(),
-              );
-            }
-        },
-        )
-      )
+          fallbackBuilder: (context) => MenuList(
+            data: DashboardController.to.foodMenu,
+          ),
+        ),
+      ),
     ];
   }
+  ///Bagian minuman
   List<Widget> DrinkList(BuildContext context){
     return [
       Row(
@@ -269,7 +304,7 @@ class HomeView extends StatelessWidget {
             ),
             SizedBox(width:10.w),
             Text(
-              'drink'.tr,
+              'Drink'.tr,
               style: Theme.of(context)
                   .textTheme
                   .headline6!
@@ -279,52 +314,24 @@ class HomeView extends StatelessWidget {
             ),
           ]
       ),
+      ///List Minuman
       Padding(
-          padding:EdgeInsets.symmetric(horizontal:25.w,vertical:17.h),
-          child : ConditionalSwitch.single<String>(
-            context: context,
-            valueBuilder:(context)=>DashboardController.to.statusMenu.value,
-            caseBuilders: {
-              'loading':(context)=>Wrap(
-                runSpacing: 17.h,
-                children:List.generate(2,
-                      (i) => RectShimmer(height:89.h,
-                    radius: 10.w,),
-                ),
-              ),
-              'error':(context)=>Center(
-                child:Text(
-                  DashboardController.to.messageMenu.value,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-
-            },
-            fallbackBuilder: (BuildContext context) {
-              final foods = DashboardController.to.drinkMenu;
-
-              if(foods.isEmpty){
-                return Center(
-                    child: Text('no data'.tr,textAlign: TextAlign.center,)
-                );
-              }else{
-                return Wrap(
-                  runSpacing: 17.h,
-                  children: foods
-                      .map<Widget>(
-                        (menu) => MenuCard(
-                      menu: menu,
-                      simple: true,
-                      onTap: () {     Get.toNamed(
-                          AppRoutes.MenuDetailView,
-                          arguments: menu);},
-                    ),
-                  ).toList(),
-                );
-              }
-            },
-          )
-      )
+        padding: EdgeInsets.symmetric(horizontal: 25.r, vertical: 17.r),
+        child: ConditionalSwitch.single<String>(
+          context: context,
+          valueBuilder: (context) => DashboardController.to.statusMenu.value,
+          caseBuilders: {
+            'loading': (context) => const LoadingMenu(),
+            'empty': (context) => EmptyDataVertical(width: 100.r),
+            'error': (context) => CustomErrorVertical(
+              message: DashboardController.to.messageMenu.value,
+            ),
+          },
+          fallbackBuilder: (context) => MenuList(
+            data: DashboardController.to.drinkMenu,
+          ),
+        ),
+      ),
     ];
   }
 }

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magang/modules/features/dasboard/view/ui/home_view.dart';
-import 'package:magang/modules/features/keranjang/view/ui/keranjang_view.dart';
 import 'package:magang/modules/features/pesanan/view/ui/pesanan_view.dart';
 import 'package:magang/modules/features/profile/view/ui/profil_view.dart';
 import '../../../../../config/themes/colors.dart';
@@ -56,7 +55,7 @@ class DashboardView extends StatelessWidget {
                         height:27.h
                     ),
                   ),
-                  label: 'home'.tr,
+                  label: 'Home'.tr,
                 ),
                 BottomNavigationBarItem(
                     icon: Padding(
@@ -75,7 +74,7 @@ class DashboardView extends StatelessWidget {
                             height:27.h
                         )
                     ),
-                    label:'order'.tr,
+                    label:'Order'.tr,
                 ),
                 BottomNavigationBarItem(
                     icon: Padding(
@@ -94,7 +93,7 @@ class DashboardView extends StatelessWidget {
                             height:27.h
                         )
                     ),
-                  label:"profile".tr,
+                  label:"Profile".tr,
                 )
               ],
             )

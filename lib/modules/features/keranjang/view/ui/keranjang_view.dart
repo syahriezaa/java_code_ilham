@@ -343,7 +343,7 @@ class KeranjangView extends StatelessWidget {
                       Flexible(
                         fit: FlexFit.loose,
                         child: PrimaryButton(
-                          text: 'Order now'.tr,
+                          text: 'Order Now'.tr,
                           onPressed: PesananController.to.order,
                         ),
                       ),

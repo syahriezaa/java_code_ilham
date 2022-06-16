@@ -40,7 +40,7 @@ class PesananView extends StatelessWidget {
                     tabs:[
                     Padding(
                         padding: EdgeInsets.symmetric(vertical:10.r),
-                        child: Tab(text: "On going".tr,)
+                        child: Tab(text: "On Going".tr,)
                     ),
                     Padding(padding: EdgeInsets.symmetric(vertical:10.r),
                         child: Tab(text: "History".tr))

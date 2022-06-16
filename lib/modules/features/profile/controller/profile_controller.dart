@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:magang/config/localization/localization.dart';
 import 'package:magang/config/routes/app_routes.dart';
 import 'package:magang/config/themes/colors.dart';
 import 'package:magang/modules/features/profile/repositories/profile_repo.dart';
 import 'package:magang/modules/features/profile/view/components/email_bottom_sheet.dart';
 import 'package:magang/modules/features/profile/view/components/image_picker_dialog.dart';
+import 'package:magang/modules/features/profile/view/components/language_bottom_sheet.dart';
 import 'package:magang/modules/features/profile/view/components/name_bottom_sheet.dart';
 import 'package:magang/modules/features/profile/view/components/phone_bottom_sheet.dart';
 import 'package:magang/modules/features/profile/view/components/pin_dialog.dart';
@@ -21,6 +23,7 @@ import 'package:magang/utils/services/local_db_service/local_db_service.dart';
 
 class ProfileController extends GetxController{
   static ProfileController get to => Get.find();
+  Rx<String> currentLanguage = RxString(Localization.currentLanguage);
 
 ///variables
 ///
@@ -242,6 +245,20 @@ Rx<User> user = Rx<User>(User.dummy);
 
     if (pin != null && pin.isNotEmpty) {
       await updateUser(pin: pin);
+    }
+  }
+
+  void openLanguageDialog() async {
+    String? language = await Get.bottomSheet(
+      const LanguageBottomSheet(),
+      backgroundColor: Colors.white,
+      shape: CustomShape.topRoundedShape,
+      isScrollControlled: true,
+    );
+    if (language != null) {
+      Localization.changeLocale(language);
+      LocalDbService.setLanguage(language);
+      currentLanguage.value = language;
     }
   }
 }

@@ -1,6 +1,8 @@
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:magang/config/routes/app_routes.dart';
 import 'package:magang/modules/features/dasboard/repositories/promo_repositories.dart';
 import 'package:magang/modules/features/loading_location/view/location_view.dart';
@@ -12,6 +14,17 @@ import '../../sign_in/repository/menu_repo.dart';
 
 class DashboardController extends GetxController{
   static DashboardController get to=>Get.find();
+  late TextEditingController searchController;
+  late Debouncer debouncer;
+
+  @override
+  void onInit(){
+    super.onInit();
+    searchController = TextEditingController();
+    debouncer = Debouncer(delay: const Duration(milliseconds: 500));
+    getPromo();
+    getListMenu();
+  }
 
   void onReady(){
     super.onReady();
@@ -20,8 +33,7 @@ class DashboardController extends GetxController{
       Get.dialog(const LoadingLocation(), barrierDismissible: false);
       await getLocation();
     });
-    getPromo();
-    getListMenu();
+
   }
   ///Navbar index
   RxInt tabIndex = RxInt(0);
@@ -30,6 +42,39 @@ class DashboardController extends GetxController{
   void changeTabIndex(int index) {
     tabIndex.value = index;
   }
+
+  /// Update search filter menu
+  Future<void> setQueryMenu(String value) async {
+    debouncer.call(() {
+      queryMenu.value = value.trim();
+    });
+  }
+  /// reload
+  Future<void> reload() async {
+    /// Bersihkan pencarian
+    ///
+    try {
+      searchController.clear();
+      setQueryMenu('');
+      print("reload");
+
+      ///
+      /// Bersihkan filter kategori
+      setCategoryMenu('all');
+
+      ///
+      /// Fetch data
+      await Future.any([
+        getListPromo(),
+        getListMenu(),
+      ]);
+    }
+    catch(e){
+      print(e);
+    }
+  }
+
+
 
   ///Promo LoginControllers
   ///
@@ -68,6 +113,7 @@ class DashboardController extends GetxController{
   ///dekalirasi variabel menu
   RxString categoryMenu = RxString('all');
   RxString filterMenu = RxString('');
+  RxString queryMenu = RxString('');
   RxString statusMenu = RxString('loading');
   RxString messageMenu = RxString('');
   RxList<MenuData> listMenu = RxList<MenuData>();
@@ -110,7 +156,10 @@ class DashboardController extends GetxController{
         e.nama.toLowerCase().contains(filterMenu.value.toLowerCase()))
         .toList();
   }
-
+///set kategori menu
+  Future<void> setCategoryMenu(String value) async {
+    categoryMenu.value = value;
+  }
   /// Cart
   RxMap<int, int> quantities = RxMap<int, int>();
   RxMap<int, String> notes = RxMap<int, String>();
@@ -144,7 +193,25 @@ class DashboardController extends GetxController{
       messageLocation.value = 'Server error'.tr;
     }
   }
+  Future<void> getListPromo() async {
+    statusPromo.value = 'loading';
 
+    /// Ambil data dari API
+    var listPromoRes = await PromoRepo.getAll();
+
+    if (listPromoRes.status_code == 200) {
+      /// Jika request API sukses
+      statusPromo.value = 'success';
+      listPromo.value = listPromoRes.data!;
+    } else if (listPromoRes.status_code == 204) {
+      /// Jika request API kosong
+      statusPromo.value = 'empty';
+    } else {
+      /// Jika request API gagal, tampilkan pesan error
+      statusPromo.value = 'error';
+      messagePromo.value = listPromoRes.message ?? 'Unknown error'.tr;
+    }
+  }
 }
 
 

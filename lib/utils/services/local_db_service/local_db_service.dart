@@ -37,4 +37,21 @@ class LocalDbService{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
   }
+  /// Menyimpan data bahasa ke shared preferences
+  static Future<void> setLanguage(String language) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language', language);
+  }
+
+  /// Mendapatkan data bahasa dari shared preferences
+  static Future<String?> getLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('language');
+  }
+
+  /// Menghapus data bahasa dari shared preferences
+  static Future<void> clearLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('language');
+  }
 }

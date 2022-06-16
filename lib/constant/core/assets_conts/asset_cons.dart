@@ -45,4 +45,7 @@ class AssetCons{
   static const String bgProfile = "assets/images/bg_profile.png";
   static const String ktpIcon = "assets/svg/ic_ktp.svg";
   static const String reviewIcon = "assets/svg/ic_review.svg";
+  static const String enFlag='assets/svg/flag_en.svg';
+  static const String idFlag='assets/svg/flag_id.svg';
+
 }

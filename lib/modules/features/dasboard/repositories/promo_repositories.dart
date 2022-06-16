@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:magang/modules/models/promo_model.dart';
 import 'package:magang/utils/services/local_db_service/local_db_service.dart';
 
-import '../../../../constant/core/apis_const/api_constant.dart';
-import '../../../../utils/services/api_service/login_api.dart';
+import 'package:magang/constant/core/apis_const/api_constant.dart';
+import 'package:magang/utils/services/api_service/login_api.dart';
 
 class PromoRepo{
   PromoRepo._();
@@ -15,7 +15,6 @@ class PromoRepo{
       var dio =ApiServices.dioCall(token: await LocalDbService.getToken());
       var response = await dio.get(ApiConstant.allPromo);
       return ListPromo.fromJSON(response.data);
-
     }
     on DioError {
       return ListPromo(status_code: 500,message:'server error'.tr);
