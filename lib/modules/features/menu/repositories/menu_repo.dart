@@ -5,8 +5,6 @@ import 'package:magang/modules/models/menu_model.dart';
 import 'package:magang/utils/services/api_service/login_api.dart';
 import 'package:magang/utils/services/local_db_service/local_db_service.dart';
 
-
-
 class MenuRepo{
   MenuRepo._();
 

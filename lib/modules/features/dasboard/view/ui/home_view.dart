@@ -30,36 +30,42 @@ class HomeView extends StatelessWidget {
     Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 90.h,
         backgroundColor: Colors.white,
         elevation: 2,
-        title: Row(
+        title: Column(
           children: [
-            Expanded(
-              child: SearchBar(
-                controller: HomeController.to.searchController,
-                onChanged: HomeController.to.setQueryMenu,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                FocusScope.of(context).unfocus();
-                Get.toNamed(AppRoutes.keranjangView);
-              },
-              splashRadius: 30.r,
-              visualDensity: VisualDensity.compact,
-              icon: Obx(
-                    () => Badge(
-                  showBadge: PesananController.to.keranjang.isNotEmpty,
-                  badgeColor: AppColor.blueColor,
-                  badgeContent: Text(
-                    PesananController.to.keranjang.length.toString(),
-                    style: Get.textTheme.labelMedium!
-                        .copyWith(color: Colors.white),
+            10.verticalSpacingRadius,
+            Row(
+              children: [
+                Expanded(
+                  child: SearchBar(
+                    controller: HomeController.to.searchController,
+                    onChanged: HomeController.to.setQueryMenu,
                   ),
-                  child: Icon(Icons.shopping_cart, size: 30.r),
                 ),
-              ),
-              color: Colors.black,
+                IconButton(
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    Get.toNamed(AppRoutes.keranjangView);
+                  },
+                  splashRadius: 30.r,
+                  visualDensity: VisualDensity.compact,
+                  icon: Obx(
+                        () => Badge(
+                      showBadge: PesananController.to.keranjang.isNotEmpty,
+                      badgeColor: AppColor.blueColor,
+                      badgeContent: Text(
+                        PesananController.to.keranjang.length.toString(),
+                        style: Get.textTheme.labelMedium!
+                            .copyWith(color: Colors.white),
+                      ),
+                      child: Icon(Icons.shopping_cart, size: 30.r),
+                    ),
+                  ),
+                  color: Colors.black,
+                ),
+              ],
             ),
           ],
         ),

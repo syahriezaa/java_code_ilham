@@ -117,7 +117,7 @@ class MenuView extends StatelessWidget {
                         () => Conditional.single(
                       context: context,
                       conditionBuilder: (context) =>
-                      MenuController.to.level.isNotEmpty,
+                      MenuController.to.levels.isNotEmpty,
                       widgetBuilder: (context) => Wrap(
                         children: [
                           Divider(

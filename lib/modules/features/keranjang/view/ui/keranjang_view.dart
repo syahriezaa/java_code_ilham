@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:magang/config/routes/app_routes.dart';
 import 'package:magang/config/themes/colors.dart';
 import 'package:magang/constant/core/assets_conts/asset_cons.dart';
-import 'package:magang/modules/features/dasboard/view/component/MenuCard.dart';
+import 'package:magang/modules/features/dasboard/view/component/menu_card.dart';
 import 'package:magang/modules/features/keranjang/contrrollers/cart_controller.dart';
 import 'package:magang/shared/widgets/primary_button.dart';
 import 'package:magang/shared/widgets/tiles.dart';

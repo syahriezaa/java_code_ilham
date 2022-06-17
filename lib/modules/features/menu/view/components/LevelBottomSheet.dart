@@ -28,7 +28,7 @@ class LevelBottomSheet extends StatelessWidget {
                 () => Wrap(
               spacing: 12.w,
               runSpacing: 12.h,
-              children: MenuController.to.level
+              children: MenuController.to.levels
                   .map<Widget>(
                     (level) => VariantChip(
                   text: level.keterangan,

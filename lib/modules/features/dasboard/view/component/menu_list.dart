@@ -3,7 +3,7 @@ import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:magang/config/routes/app_routes.dart';
-import 'package:magang/modules/features/dasboard/view/component/MenuCard.dart';
+import 'package:magang/modules/features/dasboard/view/component/menu_card.dart';
 import 'package:magang/modules/models/menu_model.dart';
 import 'package:magang/shared/widgets/empty_data.dart';
 

@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +16,12 @@ import 'config/pages/app_pages.dart';
 import 'constant/core/apis_const/api_constant.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      DevicePreview(
+          enabled: true,
+          builder: (context)=>const MyApp()
+      )
+  );
 }
 
 class MyApp extends StatefulWidget {

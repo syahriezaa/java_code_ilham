@@ -19,8 +19,8 @@ class MenuController extends GetxController {
   RxBool isInCart = RxBool(false);
 
   Rxn<MenuData> menu = Rxn<MenuData>();
-  RxList<MenuVariant> level = RxList<MenuVariant>();
-  RxList<MenuVariant> topping = RxList<MenuVariant>();
+  RxList<MenuVariant> levels = RxList<MenuVariant>([]);
+  RxList<MenuVariant> topping = RxList<MenuVariant>([]);
 
   RxInt quantity = RxInt(1);
   Rxn<MenuVariant>selectedLevel= Rxn<MenuVariant>();
@@ -36,18 +36,18 @@ class MenuController extends GetxController {
     MenuRepo.getMenuById(menu.value!.id_menu).then((menuRes) {
       if(menuRes.status_code==200){
         status.value = 'success';
-        level.value = menuRes.level;
+        levels.value = menuRes.level;
         topping.value = menuRes.topping;
       }
-      if(level.isNotEmpty && selectedLevel.value == null){
-        selectedLevel.value = level.first;
+      if(levels.isNotEmpty && selectedLevel.value == null){
+        selectedLevel.value = levels.first;
       }
       else{
         status.value = 'error';
       }
     });
     final cartOrderDetail =
-    PesananController.to.keranjang.firstWhereOrNull((e) => e.menu == menu.value);
+    PesananController.to.keranjang.firstWhereOrNull((e) => e.menu.id_menu == menu.value?.id_menu);
 
     if (cartOrderDetail != null) {
       isInCart.value = true;
@@ -137,7 +137,7 @@ class MenuController extends GetxController {
 
   void addToCart() {
     if (status.value == 'success' &&
-        (selectedLevel.value != null || level.isEmpty)) {
+        (selectedLevel.value != null || levels.isEmpty)) {
       PesananController.to.add(keranjang);
       Get.offNamedUntil(
         AppRoutes.keranjangView,
