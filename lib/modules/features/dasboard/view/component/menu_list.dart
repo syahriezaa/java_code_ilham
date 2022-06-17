@@ -23,7 +23,14 @@ class MenuList extends StatelessWidget {
         children: data.map<Widget>((menu) {
           return MenuCard.simple(
             menu: menu,
-            onTap: () => Get.toNamed(AppRoutes.MenuDetailView, arguments: menu),);
+            onTap: () {
+              try{
+              Get.toNamed(
+                AppRoutes.MenuDetailView, arguments: menu
+            );}
+                  catch(e){print(e);}
+            }
+          );
         }).toList(),
       ),
       fallbackBuilder: (context) => EmptyDataVertical(width: 100.r),

@@ -321,7 +321,7 @@ class KeranjangView extends StatelessWidget {
                         width: 35.r,
                         height: 35.r,
                       ),
-                      SizedBox(width: 9.w),
+                      SizedBox(width: 7.w),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

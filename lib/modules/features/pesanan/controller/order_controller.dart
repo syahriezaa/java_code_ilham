@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang/config/routes/app_routes.dart';
-import 'package:magang/modules/features/dasboard/controller/dasboard_controller.dart';
 import 'package:magang/modules/features/keranjang/contrrollers/cart_controller.dart';
 import 'package:magang/modules/features/pesanan/repositories/order_repo.dart';
 import 'package:magang/modules/models/keranjang.dart';
 import 'package:magang/modules/models/order_model.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+
+import 'package:magang/modules/features/dasboard/controller/home_controller.dart';
 
 
 class OrderController extends GetxController {
@@ -107,7 +107,7 @@ class OrderController extends GetxController {
   void onOrderAgain(Order order) {
     for (var detail in order.menu) {
       /// Apakah data menu masih ada
-      var menu = DashboardController.to.listMenu
+      var menu = HomeController.to.listMenu
           .firstWhereOrNull((e) => e.id_menu == detail.id_menu);
 
       if (menu != null) {

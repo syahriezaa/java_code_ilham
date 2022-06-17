@@ -6,7 +6,6 @@ import 'package:magang/modules/features/menu/repositories/menu_repo.dart';
 import 'package:magang/modules/features/menu/view/components/LevelBottomSheet.dart';
 import 'package:magang/modules/features/menu/view/components/note_bottom_sheet.dart';
 import 'package:magang/modules/features/menu/view/components/topping_bottom_sheet.dart';
-import 'package:magang/modules/models/detail_order.dart';
 import 'package:magang/modules/models/keranjang.dart';
 import 'package:magang/modules/models/menu_model.dart';
 import 'package:magang/shared/style/shapes.dart';
@@ -33,15 +32,15 @@ class MenuController extends GetxController {
   void onInit() {
     super.onInit();
     menu.value =Get.arguments as MenuData;
-    //print(menu.value);
+
     MenuRepo.getMenuById(menu.value!.id_menu).then((menuRes) {
       if(menuRes.status_code==200){
         status.value = 'success';
         level.value = menuRes.level;
         topping.value = menuRes.topping;
       }
-      if(level.isNotEmpty){
-        selectedLevel.value = level.value.first;
+      if(level.isNotEmpty && selectedLevel.value == null){
+        selectedLevel.value = level.first;
       }
       else{
         status.value = 'error';
@@ -64,7 +63,6 @@ class MenuController extends GetxController {
   }
   void onDecrement() {
     quantity.value--;
-    print(isInCart);
   }
 
 

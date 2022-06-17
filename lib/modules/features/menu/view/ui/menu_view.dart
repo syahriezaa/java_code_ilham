@@ -172,26 +172,30 @@ class MenuView extends StatelessWidget {
                   ),
                   Divider(color: darkColor2.withOpacity(0.25), height: 1),
                   SizedBox(height: 40.h),
-                  Obx(
-                        () => Conditional.single(
-                      context: context,
-                      conditionBuilder: (context) =>
-                      MenuController.to.status.value == 'success',
-                      widgetBuilder: (context) => MenuController
-                          .to.quantity >
-                          0
-                          ? PrimaryButton(
-                        text: MenuController.to.isInCart.value
-                            ? 'Update to Order'.tr
-                            : 'Add to Order'.tr,
-                        onPressed: MenuController.to.addToCart,
-                      )
-                          : DangerButton(
-                        text: 'Delete from Order'.tr,
-                        onPressed: MenuController.to.deleteFromCart,
+                  Obx(() => Conditional.single(
+                    context: context,
+                    conditionBuilder: (context) =>
+                    MenuController.to.status.value == 'success',
+                    widgetBuilder: (context) => SizedBox(
+                      width: double.infinity,
+                      child: Conditional.single(
+                        context: context,
+                        conditionBuilder: (context) =>
+                        MenuController.to.quantity > 0,
+                        widgetBuilder: (context) => PrimaryButton(
+                          text: MenuController.to.isInCart.value
+                              ? 'Update to order'.tr
+                              : 'Add to order'.tr,
+                          onPressed: MenuController.to.addToCart,
+                        ),
+                        fallbackBuilder: (context) => DangerButton(
+                          text: 'Delete from order'.tr,
+                          onPressed: MenuController.to.deleteFromCart,
+                        ),
                       ),
-                      fallbackBuilder: (context) => const SizedBox(),
                     ),
+                    fallbackBuilder: (context) => const SizedBox(),
+                  ),
                   ),
                 ],
               ),

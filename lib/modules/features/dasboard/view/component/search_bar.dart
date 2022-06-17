@@ -28,6 +28,7 @@ class SearchBar extends StatelessWidget {
           SizedBox(width: 10.w),
           Expanded(
             child: TextField(
+              autofocus: false,
               onChanged: onChanged,
               style: Theme.of(context).textTheme.bodyText1,
               decoration: InputDecoration.collapsed(

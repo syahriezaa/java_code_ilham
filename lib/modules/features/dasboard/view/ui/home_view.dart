@@ -4,7 +4,6 @@ import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:magang/modules/features/dasboard/view/component/MenuCard.dart';
 import 'package:badges/badges.dart';
 
 import 'package:magang/config/routes/app_routes.dart';
@@ -17,17 +16,18 @@ import 'package:magang/shared/style/shapes.dart';
 import 'package:magang/shared/widgets/custom_err_vertical.dart';
 import 'package:magang/shared/widgets/empty_data.dart';
 import 'package:magang/shared/widgets/shimmer.dart';
-import 'package:magang/modules/features/dasboard/controller/dasboard_controller.dart';
 import 'package:magang/modules/features/dasboard/view/component/filter_menu.dart';
 import 'package:magang/modules/features/dasboard/view/component/promo_card.dart';
 import 'package:magang/modules/features/dasboard/view/component/search_bar.dart';
+
+import '../../controller/home_controller.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(DashboardController());
+    Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -36,12 +36,15 @@ class HomeView extends StatelessWidget {
           children: [
             Expanded(
               child: SearchBar(
-                controller: DashboardController.to.searchController,
-                onChanged: DashboardController.to.setQueryMenu,
+                controller: HomeController.to.searchController,
+                onChanged: HomeController.to.setQueryMenu,
               ),
             ),
             IconButton(
-              onPressed: () => Get.toNamed(AppRoutes.keranjangView),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                Get.toNamed(AppRoutes.keranjangView);
+              },
               splashRadius: 30.r,
               visualDensity: VisualDensity.compact,
               icon: Obx(
@@ -63,7 +66,7 @@ class HomeView extends StatelessWidget {
         shape: CustomShape.bottomRoundedShape,
       ),
       body: RefreshIndicator(
-        onRefresh: DashboardController.to.reload,
+        onRefresh: HomeController.to.reload,
         child: ListView(
           children: [
             /// Promo section
@@ -77,10 +80,10 @@ class HomeView extends StatelessWidget {
                   () => Conditional.single(
                 context: context,
                 conditionBuilder: (context) =>
-                DashboardController.to.categoryMenu.value != 'drink',
+                HomeController.to.categoryMenu.value != 'drink',
                 widgetBuilder: (context) => Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: FoodList(context),
+                  children: foodList(context),
                 ),
                 fallbackBuilder: (context) => const SizedBox(),
               ),
@@ -90,7 +93,7 @@ class HomeView extends StatelessWidget {
                   () => Conditional.single(
                 context: context,
                 conditionBuilder: (context) =>
-                DashboardController.to.categoryMenu.value != 'food',
+                HomeController.to.categoryMenu.value != 'food',
                 widgetBuilder: (context) => Column(
                   mainAxisSize: MainAxisSize.min,
                   children: DrinkList(context),
@@ -128,7 +131,7 @@ class HomeView extends StatelessWidget {
         child: Obx(
               () => ConditionalSwitch.single<String>(
             context: context,
-            valueBuilder: (context) => DashboardController.to.statusPromo.value,
+            valueBuilder: (context) => HomeController.to.statusPromo.value,
             caseBuilders: {
               'loading': (context) => SizedBox(
                 height: 188.r,
@@ -152,7 +155,7 @@ class HomeView extends StatelessWidget {
                 child: EmptyDataVertical(width: 100.r),
               ),
               'error': (context) => CustomErrorVertical(
-                message: DashboardController.to.messagePromo.value,
+                message: HomeController.to.messagePromo.value,
               ),
             },
             fallbackBuilder: (context) => ListView.separated(
@@ -162,12 +165,14 @@ class HomeView extends StatelessWidget {
               ),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => PromoCard(
-                promo: DashboardController.to.listPromo.elementAt(index),
-                onTap: ()=>Get.toNamed(
+                promo: HomeController.to.listPromo.elementAt(index),
+                onTap: (){
+                  FocusScope.of(context).unfocus();
+                  Get.toNamed(
                     AppRoutes.PromoDetailView,
-                    arguments:DashboardController.to.listPromo.elementAt(index)),
+                    arguments:HomeController.to.listPromo.elementAt(index));},
               ),
-              itemCount: DashboardController.to.listPromo.length,
+              itemCount: HomeController.to.listPromo.length,
               separatorBuilder: (context, index) => SizedBox(width: 25.w),
             ),
           ),
@@ -192,9 +197,9 @@ class HomeView extends StatelessWidget {
         itemBuilder: (context, index) => Obx(
               () => FilterMenu(
             isSelected:
-            DashboardController.to.categoryMenu.value == filters[index]['value'],
+            HomeController.to.categoryMenu.value == filters[index]['value'],
             onTap: () =>
-                DashboardController.to.setCategoryMenu(filters[index]['value']!),
+                HomeController.to.setCategoryMenu(filters[index]['value']!),
             iconPath: filters[index]['icon']!,
             text: filters[index]['name']!,
           ),
@@ -232,16 +237,16 @@ class HomeView extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 25.r, vertical: 17.r),
         child: ConditionalSwitch.single<String>(
           context: context,
-          valueBuilder: (context) => DashboardController.to.statusMenu.value,
+          valueBuilder: (context) => HomeController.to.statusMenu.value,
           caseBuilders: {
             'loading': (context) => const LoadingMenu(),
             'empty': (context) => EmptyDataVertical(width: 100.r),
             'error': (context) => CustomErrorVertical(
-              message: DashboardController.to.messageMenu.value,
+              message: HomeController.to.messageMenu.value,
             ),
           },
           fallbackBuilder: (context) => MenuList(
-            data: DashboardController.to.foodMenu,
+            data: HomeController.to.foodMenu,
           ),
         ),
       ),
@@ -249,7 +254,7 @@ class HomeView extends StatelessWidget {
     ];
   }
   ///List Menkanan
-  List<Widget> FoodList(BuildContext context){
+  List<Widget> foodList(BuildContext context){
     return [
       Row(
         children:[
@@ -276,16 +281,16 @@ class HomeView extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 25.r, vertical: 17.r),
         child: ConditionalSwitch.single<String>(
           context: context,
-          valueBuilder: (context) => DashboardController.to.statusMenu.value,
+          valueBuilder: (context) => HomeController.to.statusMenu.value,
           caseBuilders: {
             'loading': (context) => const LoadingMenu(),
             'empty': (context) => EmptyDataVertical(width: 100.r),
             'error': (context) => CustomErrorVertical(
-              message: DashboardController.to.messageMenu.value,
+              message: HomeController.to.messageMenu.value,
             ),
           },
           fallbackBuilder: (context) => MenuList(
-            data: DashboardController.to.foodMenu,
+            data: HomeController.to.foodMenu,
           ),
         ),
       ),
@@ -319,16 +324,16 @@ class HomeView extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 25.r, vertical: 17.r),
         child: ConditionalSwitch.single<String>(
           context: context,
-          valueBuilder: (context) => DashboardController.to.statusMenu.value,
+          valueBuilder: (context) => HomeController.to.statusMenu.value,
           caseBuilders: {
             'loading': (context) => const LoadingMenu(),
             'empty': (context) => EmptyDataVertical(width: 100.r),
             'error': (context) => CustomErrorVertical(
-              message: DashboardController.to.messageMenu.value,
+              message: HomeController.to.messageMenu.value,
             ),
           },
           fallbackBuilder: (context) => MenuList(
-            data: DashboardController.to.drinkMenu,
+            data: HomeController.to.drinkMenu,
           ),
         ),
       ),
