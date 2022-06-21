@@ -10,12 +10,19 @@ import 'package:magang/constant/common/constants.dart';
 import 'package:magang/modules/features/splash/controller/splash_controller.dart';
 import 'package:magang/modules/global_controllers/global_conection.dart';
 import 'package:magang/modules/global_controllers/global_binding.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:magang/utils/services/notification_service.dart';
 
 
 import 'config/pages/app_pages.dart';
 import 'constant/core/apis_const/api_constant.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  /// Firebase
+  await Firebase.initializeApp();
+  await NotificationServices.init();
+
   runApp(
       DevicePreview(
           enabled: true,
