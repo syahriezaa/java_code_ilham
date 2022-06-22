@@ -6,6 +6,7 @@ class AssetCons{
   ///loaction image
   static const String locationIcon="assets/images/loading_map.png";
   ///
+  static const String appIcon="assets/images/logo_login.png";
   static const String homeIcon="assets/svg/ic_home.svg";
   static const String pesananIcon="assets/svg/ic_persanan.svg";
   static const String profilIcon="assets/svg/ic_profil.svg";

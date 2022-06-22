@@ -31,4 +31,8 @@ class ApiConstant{
   static const String updateUserPhoto = '$baseUrl/user/profil';
   static const String updateUserKTP = '$baseUrl/user/ktp';
 
+
+  /// Firebase Cloud Messaging
+  static const String firebaseCloudMessaging =
+      'https://fcm.googleapis.com/fcm/send';
 }

@@ -6,7 +6,7 @@ class ApiServices {
   ApiServices._internal();
 
   // Create Dio
-  static Dio dioCall({int connectTimeout = 20000, String? token}) {
+  static Dio dioCall({int connectTimeout = 20000, String? token,String? authorization }) {
 
     var headers = {
       'Content-Type': 'application/json',

@@ -7,6 +7,7 @@ class AppConstant{
   static const String appLink = 'https://promo.trainee.landa.id';
   static const String appDeepLink = 'landa://javacode.app';
   static const String appVersion = '1.0.0';
+  static const String firebaseCloudMessagingKey ="frtdjONkSRKn9joN415IPp:APA91bHPYGlso0ZReULgsE30QvXCNyGSIn_0Rjc0zm7ZfLEUdCPcjgYAqzHn_1w341yB3a4BJqPP7qxqND6NTAOuGsm4sbe-oJKNGutFJq1PtLluW7p4GzVA3llVT80PxKVel3HVSFpr";
 
   static const double locationLatitude = -7.9423;
   static const double locationLongitude = 112.6230;

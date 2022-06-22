@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,10 +8,9 @@ import 'package:magang/config/localization/localization.dart';
 import 'package:magang/config/routes/app_routes.dart';
 import 'package:magang/config/themes/light_theme.dart';
 import 'package:magang/constant/common/constants.dart';
-import 'package:magang/modules/features/splash/controller/splash_controller.dart';
-import 'package:magang/modules/global_controllers/global_conection.dart';
 import 'package:magang/modules/global_controllers/global_binding.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:magang/utils/services/api_service/login_api.dart';
 import 'package:magang/utils/services/notification_service.dart';
 
 
@@ -25,7 +25,7 @@ void main() async {
 
   runApp(
       DevicePreview(
-          enabled: true,
+          enabled: false,
           builder: (context)=>const MyApp()
       )
   );
@@ -40,7 +40,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  //final NewworkController globalConection= Get.find<NewworkController>();
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -62,6 +61,6 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: Localization.locales,
     ),
     );
-
   }
+
 }
