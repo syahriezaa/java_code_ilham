@@ -211,7 +211,7 @@ Rx<User> user = Rx<User>(User.dummy);
   /// Update phone number dialog
   void openUpdatePhoneDialog() async {
     String? telepon = await Get.bottomSheet(
-      PhoneBottomSheet(telepon: user.value.telepon ?? ''),
+      PhoneBottomSheet(telepon: user.value.telepon ?? '',keyboardType: TextInputType.phone),
       backgroundColor: Colors.white,
       shape: CustomShape.topRoundedShape,
       isScrollControlled: true,

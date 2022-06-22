@@ -6,8 +6,8 @@ import '../../../../../config/themes/colors.dart';
 
 class PhoneBottomSheet extends StatefulWidget {
   final String telepon;
-
-  const PhoneBottomSheet({Key? key, required this.telepon}) : super(key: key);
+  final TextInputType keyboardType;
+  const PhoneBottomSheet({Key? key, required this.telepon,required this.keyboardType}) : super(key: key);
 
   @override
   State<PhoneBottomSheet> createState() => _PhoneBottomSheetState();
@@ -37,6 +37,7 @@ class _PhoneBottomSheetState extends State<PhoneBottomSheet> {
             children: [
               Expanded(
                 child: TextField(
+                  keyboardType: widget.keyboardType,
                   controller: controller,
                   style: Get.textTheme.bodySmall,
                   decoration: InputDecoration(
@@ -52,7 +53,6 @@ class _PhoneBottomSheetState extends State<PhoneBottomSheet> {
                     ),
                   ),
                   maxLength: 100,
-                  keyboardType: TextInputType.phone,
                   autofocus: true,
                 ),
               ),

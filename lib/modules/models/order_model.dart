@@ -29,7 +29,7 @@ class Order {
   });
 
   /// Harga tanpa diskon
- int get total => total_bayar + potongan;
+ int get total => total_bayar;
 
   /// From json
   factory Order.fromJson(Map<String, dynamic> json) {

@@ -16,6 +16,8 @@ class MenuController extends GetxController {
   static MenuController get to => Get.find();
 
   RxString status = RxString('loading');
+  RxString statusLevels = RxString('loading');
+  RxString statusToppings = RxString('loading');
   RxBool isInCart = RxBool(false);
 
   Rxn<MenuData> menu = Rxn<MenuData>();
@@ -32,38 +34,61 @@ class MenuController extends GetxController {
   void onInit() {
     super.onInit();
     menu.value =Get.arguments as MenuData;
-
+    print(isInCart.value);
+    updateDataFromCart();
     MenuRepo.getMenuById(menu.value!.id_menu).then((menuRes) {
-      if(menuRes.status_code==200){
+      if (menuRes.status_code == 200) {
         status.value = 'success';
-        levels.value = menuRes.level;
-        topping.value = menuRes.topping;
-      }
-      if(levels.isNotEmpty && selectedLevel.value == null){
-        selectedLevel.value = levels.first;
-      }
-      else{
+
+        if (menuRes.level.isNotEmpty) {
+          statusLevels.value = 'success';
+          levels.value = menuRes.level;
+
+          /// Atur level ke default
+          selectedLevel.value ??= levels.first;
+        } else {
+          statusLevels.value = 'empty';
+        }
+
+        if (menuRes.topping.isNotEmpty) {
+          statusToppings.value = 'success';
+          topping.value = menuRes.topping;
+        } else {
+          statusToppings.value = 'empty';
+        }
+      } else {
         status.value = 'error';
+        statusLevels.value = 'error';
+        statusToppings.value = 'error';
       }
     });
-    final cartOrderDetail =
-    PesananController.to.keranjang.firstWhereOrNull((e) => e.menu.id_menu == menu.value?.id_menu);
 
+
+  }
+
+  void updateDataFromCart() {
+    final cartOrderDetail =
+    PesananController.to.keranjang
+        .firstWhereOrNull((e) => e.menu.id_menu == menu.value?.id_menu);
+try{
     if (cartOrderDetail != null) {
       isInCart.value = true;
       selectedLevel.value = cartOrderDetail.level;
       note.value = cartOrderDetail.note;
       selectedTopping.value = cartOrderDetail.toppings?.toList() ?? [];
       quantity.value = cartOrderDetail.quantity;
+    }}catch(e){
+      print(e);
     }
-
   }
+
   void onIncrement() {
     quantity.value++;
   }
   void onDecrement() {
     quantity.value--;
   }
+
 
 
   /// Pemilihan Toping
@@ -138,6 +163,7 @@ class MenuController extends GetxController {
   void addToCart() {
     if (status.value == 'success' &&
         (selectedLevel.value != null || levels.isEmpty)) {
+      isInCart.value = true;
       PesananController.to.add(keranjang);
       Get.offNamedUntil(
         AppRoutes.keranjangView,

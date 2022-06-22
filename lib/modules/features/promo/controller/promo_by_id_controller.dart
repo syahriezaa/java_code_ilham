@@ -55,8 +55,9 @@ class PromoByIdController extends GetxController{
     String fileName ='${DateTime.now().microsecondsSinceEpoch}.png';
     String path = '$directory/$fileName';
     
-    await screenshotController.captureAndSave(directory);
-    await Share.shareFiles([path],text: 'Get this promo'.trParams({
+    await screenshotController.captureAndSave(directory,fileName: fileName);
+    await Share.shareFiles([path],
+        text: 'Get this promo'.trParams({
       'link':'${AppConstant.appDeepLink}?id=${promo.value!.id_promo}'
     })
     );

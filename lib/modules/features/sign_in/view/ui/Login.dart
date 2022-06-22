@@ -48,11 +48,13 @@ class LoginView extends StatelessWidget{
                           Container(
                             width: 350,
                             child: TextFormField(
+                              textInputAction: TextInputAction.next,
                                 controller:email ,
-                              //onSaved: (input)=>requestmodel.email=input!,
+                                style: Get.textTheme.bodySmall!.copyWith(fontWeight:FontWeight.w100),
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (input)=>!input!.contains("@")?"email tidak valid":null,
-                                decoration: InputDecoration( labelText: 'Email'.tr,
+                                decoration: InputDecoration(
+                                  labelText: 'Email'.tr,
                                   labelStyle: Theme.of(context).textTheme.bodySmall,
                                   hintText: 'Lorem.ipsum@gmail.com',
                                   hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
