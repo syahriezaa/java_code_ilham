@@ -25,4 +25,19 @@ class OrderRepository {
       return null;
     }
   }
+  /// Memanggil API untuk membatalkan  menu
+  static Future<int> cancel(int id) async {
+    try {
+      var dio = ApiServices.dioCall(token: await LocalDbService.getToken());
+      var response = await dio.post(
+        ApiConstant.cancelOrder + "/$id",
+      );
+      var status = response.data['status_code'];
+      return status;
+    } on DioError {
+      print("error: ");
+      print(DioError);
+      return 500;
+    }
+  }
 }

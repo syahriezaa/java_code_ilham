@@ -22,7 +22,7 @@ class ApiConstant{
   static const String onGoingOrder = '$baseUrl/order/user';
   static const String historyOrder = '$baseUrl/order/history';
   static const String detailOrder = '$baseUrl/order/detail';
-
+  static const String cancelOrder = '$baseUrl/order/batal';
 
 
   /// Profile

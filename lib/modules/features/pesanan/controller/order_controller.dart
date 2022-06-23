@@ -39,9 +39,10 @@ class OrderController extends GetxController {
     ///call from repo data yang sedang berjalan
     ListOrder listOrder= await OrderRepo.getOnGoing();
     if (listOrder.status_code == 200) {
+      final data = listOrder.data!.where((e) => e.status != 4).toList();
       ///jika berhasil, tampilkan data
       onGoingStatus.value = 'success';
-      onGoingOrders.value = listOrder.data!;
+      onGoingOrders.value =data;
     } else if (listOrder.status_code == 204) {
       onGoingStatus.value = 'empty';
     } else {

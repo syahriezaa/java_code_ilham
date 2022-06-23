@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:magang/config/themes/colors.dart';
 import 'package:magang/modules/features/keranjang/repositories/order_repo.dart';
+import 'package:magang/modules/features/pesanan/controller/order_controller.dart';
 import 'package:magang/modules/features/pesanan/repositories/order_repo.dart';
 import 'package:magang/modules/models/detail_order.dart';
 import 'package:magang/modules/models/order_model.dart';
+import 'package:magang/shared/customs/success_snack_bar.dart';
+import 'package:magang/shared/widgets/ErrorSnackBar.dart';
 
 class DetailOrderController extends GetxController {
   static DetailOrderController get to => Get.find();
@@ -35,6 +40,8 @@ class DetailOrderController extends GetxController {
 
   /// Ambil data pesanan
   Future<void> fetch() async {
+    print("fetched");
+    print(order.value!.status);
     if (order.value != null) {
       status.value = 'update';
       await fetchOrderFromId(order.value!.id_order);
@@ -72,4 +79,64 @@ class DetailOrderController extends GetxController {
   List<OrderDetail> get drinkItems => order.value != null
       ? order.value!.menu.where((e) => e.isDrink).toList()
       : [];
+
+  Future<void> cancel() async {
+    final result = await Get.dialog(AlertDialog(
+      title: Text(
+        'Warning'.tr,
+        style: Get.textTheme.titleMedium?.copyWith(color: AppColor.redColor),
+      ),
+      content: Text(
+        'Are you sure want to cancel order?'.tr,
+        style: Get.textTheme.bodyMedium,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Get.back<bool>(result: false),
+          child: Text(
+            'No'.tr,
+            style:
+            Get.textTheme.labelLarge?.copyWith(color: AppColor.greenColor),
+          ),
+        ),
+        TextButton(
+          onPressed: () => Get.back<bool>(result: true),
+          child: Text(
+            'Yes'.tr,
+            style: Get.textTheme.labelLarge?.copyWith(color: AppColor.redColor),
+          ),
+        ),
+      ],
+    ));
+
+    ///batalkan pesanan
+    ///
+    if (result == true) {
+      /// Fetch api batal order
+      final statusCode = await OrderRepository.cancel(order.value!.id_order);
+      if (statusCode == 200) {
+        /// Fetch data baru
+        await fetch();
+        /// Tampilkan snackbar sukses
+        Get.showSnackbar(SuccessSnackBar(
+          title: 'Success!'.tr,
+          message: 'Your order has been canceled'.tr,
+        ));
+
+        /// Reload tampilan daftar order
+        OrderController.to.fetchOnGoing();
+        OrderController.to.fetchHistory();
+      } else {
+        await fetch();
+        /// Tampilkan snackbar error tidak diketahui
+        Get.showSnackbar(ErrorSnackBar(
+          title: 'Something went wrong'.tr,
+          message: 'Unknown error'.tr,
+        ));
+      }
+    }
+  }
 }
+
+
+
