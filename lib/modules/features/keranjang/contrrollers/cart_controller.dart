@@ -12,6 +12,7 @@ import 'package:magang/modules/features/keranjang/repositories/voucher_repo.dart
 import 'package:magang/modules/features/keranjang/view/components/discount_detail.dart';
 import 'package:magang/modules/features/keranjang/view/components/order_succes.dart';
 import 'package:magang/modules/features/keranjang/view/components/pin_dialogue.dart';
+import 'package:magang/modules/features/pesanan/controller/order_controller.dart';
 import 'package:magang/modules/models/auth_model.dart';
 import 'package:magang/modules/models/keranjang.dart';
 import 'package:magang/modules/models/voucher_model.dart';
@@ -256,6 +257,7 @@ class PesananController extends GetxController {
 
     /// Navigasi ke halaman order
     Get.until(ModalRoute.withName(AppRoutes.DashboardView));
+    OrderController.to.fetchOnGoing();
 
     /// Hapus data keranjang
     keranjang.clear();

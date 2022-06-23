@@ -3,11 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:magang/modules/features/menu/view/components/holder_bottom_sheet.dart';
 
-import '../../../../../config/themes/colors.dart';
+import 'package:magang/config/themes/colors.dart';
 
 class EmailBottomSheet extends StatefulWidget {
   final String email;
-
   const EmailBottomSheet({Key? key, required this.email}) : super(key: key);
 
   @override
@@ -16,6 +15,7 @@ class EmailBottomSheet extends StatefulWidget {
 
 class _EmailBottomSheetState extends State<EmailBottomSheet> {
   late final TextEditingController controller;
+  final formKey=GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -37,24 +37,34 @@ class _EmailBottomSheetState extends State<EmailBottomSheet> {
           Row(
             children: [
               Expanded(
-                child: TextField(
-                  controller: controller,
-                  style: Get.textTheme.bodySmall,
-                  decoration: InputDecoration(
-                    hintText: 'Email'.tr,
-                    hintStyle: Get.textTheme.bodySmall,
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide:
-                      BorderSide(color: AppColor.blueColor, width: 2),
+                child: Form(
+                  key: formKey,
+                  child: TextFormField(
+                    controller: controller,
+                    style: Get.textTheme.bodySmall,
+                    validator: (value) {
+                      if (!GetUtils.isEmail(controller.text)) {
+                        return 'Ivalid Email'.tr;
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Email'.tr,
+                      hintStyle: Get.textTheme.bodySmall,
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide:
+                        BorderSide(color: AppColor.blueColor, width: 2),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide:
+                        BorderSide(color: AppColor.blueColor, width: 2),
+                      ),
                     ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide:
-                      BorderSide(color: AppColor.blueColor, width: 2),
-                    ),
+                    maxLength: 100,
+                    keyboardType: TextInputType.emailAddress,
+                    autofocus: true,
                   ),
-                  maxLength: 100,
-                  keyboardType: TextInputType.emailAddress,
-                  autofocus: true,
+
                 ),
               ),
               12.verticalSpacingRadius,
@@ -62,7 +72,11 @@ class _EmailBottomSheetState extends State<EmailBottomSheet> {
                 icon: const Icon(Icons.check_circle),
                 splashRadius: 20.r,
                 color:AppColor.blueColor,
-                onPressed: () => Get.back(result: controller.text),
+                onPressed: ()  {
+                  if(formKey.currentState!.validate()){
+                    Get.back(result: controller.text);
+                  }
+                  },
               ),
             ],
           ),

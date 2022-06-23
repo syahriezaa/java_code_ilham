@@ -15,13 +15,13 @@ import '../../sign_in/repository/menu_repo.dart';
 class DashboardController extends GetxController{
   static DashboardController get to=>Get.find();
 
-
+@override
   void onReady(){
     super.onReady();
 
     Future.delayed(const Duration(milliseconds:500),()async{
       Get.dialog(const LoadingLocation(), barrierDismissible: false);
-      await getLocation();
+      LocationServices.streamService.listen((status) => getLocation());
     });
 
   }

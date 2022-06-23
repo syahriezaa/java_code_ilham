@@ -8,7 +8,7 @@ import 'package:magang/constant/common/constants.dart';
 class LocationServices {
   /// Memastikan class ini tidak bisa diinstansiasi
   LocationServices._();
-
+  static Stream<ServiceStatus> streamService = Geolocator.getServiceStatusStream();
   /// Mendapatkan informasi lokasi
   static Future<Position> getCurrentPosition() async {
     /// Apakah layanan lokasi aktif?

@@ -36,16 +36,12 @@ class OrderController extends GetxController {
 
   Future<void> fetchOnGoing() async {
     onGoingStatus.value = 'loading';
-
-    print('fetching on going');
-
     ///call from repo data yang sedang berjalan
     ListOrder listOrder= await OrderRepo.getOnGoing();
     if (listOrder.status_code == 200) {
       ///jika berhasil, tampilkan data
       onGoingStatus.value = 'success';
       onGoingOrders.value = listOrder.data!;
-      print(listOrder.data);
     } else if (listOrder.status_code == 204) {
       onGoingStatus.value = 'empty';
     } else {

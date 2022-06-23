@@ -77,6 +77,7 @@ class LoginView extends StatelessWidget{
                             child: TextFormField(
                               controller: password,
                               obscureText: true,
+                              style: Get.textTheme.bodySmall!.copyWith(fontWeight:FontWeight.w100),
                               keyboardType: TextInputType.visiblePassword,
                               validator: (input)=>!input!.contains("@")?"email tidak valid":null,
                               decoration: InputDecoration(
