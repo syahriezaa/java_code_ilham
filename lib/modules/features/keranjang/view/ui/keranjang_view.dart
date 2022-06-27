@@ -44,9 +44,7 @@ class KeranjangView extends StatelessWidget {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: ()=> Future.any([
-          PesananController.to.getDiscounts(),
-        ]),
+        onRefresh: ()=> PesananController.to.getDiscounts(),
         child: Obx(
             ()=>Conditional.single(
               context: context,

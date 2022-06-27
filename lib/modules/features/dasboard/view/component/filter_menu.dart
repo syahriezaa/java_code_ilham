@@ -36,7 +36,7 @@ class FilterMenu extends StatelessWidget {
             BoxShadow(
               offset: Offset(0, 2),
               blurRadius: 8,
-              spreadRadius:-1,
+              spreadRadius:-0.5,
               color: darkColor2.withOpacity(0.25),
             ),
           ],

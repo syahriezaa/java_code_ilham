@@ -49,11 +49,16 @@ class PesananController extends GetxController {
   ///Get Diskon
   Future <void> getDiscounts() async {
     var diskonResponse = await DiskonRepo.getAll();
-
     if (diskonResponse.status_code == 200) {
       diskonResponse.data!.shuffle();
       discounts.value = diskonResponse.data!.sublist(0, 2);
+      print("diskon : ${diskonResponse.status_code}");
     }
+    else {
+      print("diskon : ${diskonResponse.status_code}");
+      discounts.value = [];
+    }
+
   }
 
   ///food items

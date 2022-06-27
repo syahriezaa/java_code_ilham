@@ -19,10 +19,8 @@ class DashboardController extends GetxController{
   void onReady(){
     super.onReady();
 
-    Future.delayed(const Duration(milliseconds:500),()async{
-      Get.dialog(const LoadingLocation(), barrierDismissible: false);
-      LocationServices.streamService.listen((status) => getLocation());
-    });
+    Future.delayed(const Duration(milliseconds: 500), getLocation);
+    LocationServices.streamService.listen((status) => getLocation());
 
   }
   ///Navbar index
@@ -41,13 +39,19 @@ class DashboardController extends GetxController{
   RxnString address = RxnString();
 
   Future<void> getLocation() async {
+    if (Get.isDialogOpen == false) {
+      Get.dialog(const LoadingLocation(), barrierDismissible: false);
+    }
+
     try {
       /// Mendapatkan lokasi saat ini
-      position.value = await LocationServices.getCurrentPosition();
+      statusLocation.value = 'loading';
+      final locationResult = await LocationServices.getCurrentPosition();
 
-      if (LocationServices.isDistanceClose(position.value!)) {
+      if (locationResult.success) {
         /// Jika jarak lokasi cukup dekat, dapatkan informasi alamat
-        address.value = await LocationServices.getAddress(position.value!);
+        position.value = locationResult.position;
+        address.value = locationResult.address;
         statusLocation.value = 'success';
 
         await Future.delayed(const Duration(seconds: 1));
@@ -55,7 +59,7 @@ class DashboardController extends GetxController{
       } else {
         /// Jika jarak lokasi tidak cukup dekat, tampilkan pesan
         statusLocation.value = 'error';
-        messageLocation.value = 'Distance not close'.tr;
+        messageLocation.value = locationResult.message!;
       }
     } catch (e) {
       /// Jika terjadi kesalahan server
