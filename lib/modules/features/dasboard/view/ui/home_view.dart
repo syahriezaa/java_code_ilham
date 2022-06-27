@@ -77,7 +77,10 @@ class HomeView extends StatelessWidget {
           children: [
             /// Promo section
             ...promoSection(context),
-
+            TextButton(
+              onPressed: () => throw Exception(),
+              child: const Text("Throw Test Exception"),
+            ),
             /// Menu section
             listCategoryMenu(context),
             17.verticalSpacingRadius,
