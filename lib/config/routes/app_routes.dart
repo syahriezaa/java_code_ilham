@@ -13,4 +13,6 @@ class AppRoutes{
   static const String PesananView = '/pesanan_view';
   static const String DetailPesananView = '/detail_order_view';
   static const String ProfileView = '/profile_view';
+  static const String DaftarPenilaianView = '/daftar_penilaian_view';
+  static const String PenilianView='/penilaian_view';
 }

@@ -5,6 +5,8 @@ import 'package:magang/modules/features/dasboard/view/ui/Dashboard_view.dart';
 import 'package:magang/modules/features/keranjang/view/ui/detail_voucher.dart';
 import 'package:magang/modules/features/keranjang/view/ui/detail_voucher.dart';
 import 'package:magang/modules/features/keranjang/view/ui/keranjang_view.dart';
+import 'package:magang/modules/features/penilian/view/ui/daftar_penilaian_view.dart';
+import 'package:magang/modules/features/penilian/view/ui/penilaian.dart';
 import 'package:magang/modules/features/pesanan/view/ui/detail_order_view.dart';
 import 'package:magang/modules/features/pesanan/view/ui/pesanan_view.dart';
 import 'package:magang/modules/features/profile/view/ui/profil_view.dart';
@@ -71,6 +73,12 @@ class AppPages{
       GetPage(name: AppRoutes.ProfileView,
           page: ()=>ProfileView()
       ),
+      GetPage(name: AppRoutes.DaftarPenilaianView,
+          page: ()=>DaftarPenilaianView()
+      ),
+      GetPage(name: AppRoutes.PenilianView ,
+          page: ()=>PenilaianView()
+    )
     ];
   }
 

@@ -49,4 +49,13 @@ class AssetCons{
   static const String enFlag='assets/svg/flag_en.svg';
   static const String idFlag='assets/svg/flag_id.svg';
 
+
+  ///Review Icon
+  static const String reviewDate = "assets/svg/ic_datereview.svg";
+  static const String replayicon= "assets/svg/ic_replay.svg";
+  static const String rating1 = "assets/svg/ic_rating1.svg";
+  static const String ratingImage="assets/images/ratingImage.png";
+  static const String activeStar = "assets/svg/ic_active_star.svg";
+  static const String inactiveStar = "assets/svg/ic_inactive_star.svg";
+
 }

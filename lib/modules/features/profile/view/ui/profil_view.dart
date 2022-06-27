@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:magang/config/routes/app_routes.dart';
 import 'package:magang/constant/core/assets_conts/asset_cons.dart';
 import 'package:magang/modules/features/profile/controller/profile_controller.dart';
 import 'package:magang/shared/widgets/primary_button.dart';
@@ -241,7 +242,9 @@ class ProfileView extends StatelessWidget {
                  const Spacer(),
                  PrimaryButton.compact(
                    text: 'Review Now'.tr,
-                   onPressed: () {},
+                   onPressed: () {
+                     Get.toNamed(AppRoutes.DaftarPenilaianView);
+                   },
                  ),
                ],
              ),

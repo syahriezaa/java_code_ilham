@@ -13,6 +13,7 @@ import 'package:magang/modules/features/dasboard/controller/home_controller.dart
 class OrderController extends GetxController {
   static OrderController get to => Get.find();
 
+  @override
   void onInit(){
     super.onInit();
     fetchOnGoing();

@@ -40,8 +40,6 @@ class DetailOrderController extends GetxController {
 
   /// Ambil data pesanan
   Future<void> fetch() async {
-    print("fetched");
-    print(order.value!.status);
     if (order.value != null) {
       status.value = 'update';
       await fetchOrderFromId(order.value!.id_order);
